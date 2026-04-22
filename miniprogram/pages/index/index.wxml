@@ -50,7 +50,7 @@
 
         <!-- 按钮区 -->
         <view class="card-btn-wrapper">
-          <view class="card-btn">
+          <view class="card-btn {{item.mastery !== 'L0' ? 'learned' : ''}}">
             <text class="hashtag-icon">#</text>
             <text class="card-btn-text">{{item.mastery !== 'L0' ? '已学习' : '试试'}}</text>
           </view>

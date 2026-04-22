@@ -1,6 +1,6 @@
 .tab-bar {
   position: fixed;
-  bottom: calc(env(safe-area-inset-bottom) + 8rpx);
+  bottom: calc(env(safe-area-inset-bottom) - 32rpx);
   left: 0;
   right: 0;
   height: calc(76px + env(safe-area-inset-bottom));
@@ -16,7 +16,7 @@
 .tab-bar-container {
   width: 92%;
   height: 76px;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 9999px;
   overflow: hidden;
   display: flex;
@@ -26,6 +26,8 @@
   box-sizing: border-box;
   box-shadow: 0 8rpx 22rpx rgba(0, 0, 0, 0.1);
   pointer-events: auto;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .tab-bar-item {

@@ -11,5 +11,16 @@ export const CATEGORY_12_SCENES = [
     level1_listening: {},
     level2_shadowing: {},
     level3_practical: {}
+  },
+  {
+    id: 108,
+    title: '身体五官认识',
+    source: '《基础词汇》',
+    description: '头、手、脚、眼、耳等',
+    target: '认识身体各部位的上海话说法',
+    coverIcon: SCENE_COVER.BODY_PARTS,
+    level1_listening: {},
+    level2_shadowing: {},
+    level3_practical: {}
   }
 ];

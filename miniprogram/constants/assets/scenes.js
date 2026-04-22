@@ -1,5 +1,6 @@
 export const SCENE_COVER = {
   PHONETICS: '/assets/icons/scenes/phonetics.svg',
+  BODY_PARTS: '/assets/materials/logo-image.png',
   GREETING: '/assets/icons/scenes/greeting.svg',
   TIME_PLACE: '/assets/icons/scenes/time-place.svg',
   DAILY_LIFE: '/assets/icons/scenes/daily-life.svg',

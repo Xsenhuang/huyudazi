@@ -17,21 +17,24 @@ Page({
         en: 'VOCABULARY',
         zh: '词汇',
         desc: '开关和出入词汇',
-        bg: 'linear-gradient(180deg, #4FCBFF 0%, #CFEFFF 100%)'
+        topBg: 'radial-gradient(ellipse at 17% 11%, rgba(43, 193, 243, 1) 0%, rgba(130, 215, 255, 1) 51%, rgba(255, 255, 255, 1) 90%)',
+        bottomBg: '#D1F1FF'
       },
       {
         id: 'vocabulary-orange',
         en: 'VOCABULARY',
         zh: '词汇',
         desc: '开关和出入词汇',
-        bg: 'linear-gradient(180deg, #FF7A2E 0%, #FFE0CF 100%)'
+        topBg: 'radial-gradient(ellipse at 17% 11%, rgba(243, 103, 43, 1) 0%, rgba(255, 181, 130, 1) 51%, rgba(255, 255, 255, 1) 90%)',
+        bottomBg: '#FFF1E7'
       },
       {
         id: 'vocabulary-yellow',
         en: 'VOCABULARY',
         zh: '词汇',
         desc: '开关和出入词汇',
-        bg: 'linear-gradient(180deg, #FFD54A 0%, #FFF6CA 100%)'
+        topBg: 'radial-gradient(ellipse at 9% 0%, rgba(255, 255, 255, 1) 10%, rgba(255, 234, 130, 1) 49%, rgba(255, 212, 55, 1) 100%)',
+        bottomBg: '#FFF5BE'
       }
     ],
     currentCard: 1

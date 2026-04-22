@@ -227,3 +227,13 @@ page {
   font-size: 28rpx;
   color: #999999;
 }
+
+/* 已学习状态的样式 */
+.card-btn.learned {
+  color: #2BF22B;
+}
+
+.card-btn.learned .hashtag-icon {
+  border-color: #2BF22B;
+  color: #2BF22B;
+}

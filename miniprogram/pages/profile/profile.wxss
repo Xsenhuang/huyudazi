@@ -63,14 +63,14 @@
   justify-content: space-between;
   align-items: center;
   background: #f3f3f3;
-  border-radius: 38rpx;
+  border-radius: 42rpx;
   box-sizing: border-box;
 }
 
 .switcher-item {
   width: 31%;
   height: 72rpx;
-  border-radius: 32rpx;
+  border-radius: 36rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -112,13 +112,9 @@
 }
 
 .date-arrow {
-  width: 24rpx;
-  height: 24rpx;
+  width: 20px;
+  height: 20px;
   opacity: 0.82;
-}
-
-.date-arrow-left {
-  transform: rotate(180deg);
 }
 
 /* 数据卡片网格 */
@@ -192,48 +188,18 @@
   width: 40rpx;
   height: 40rpx;
   margin-right: 20rpx;
-  border-radius: 10rpx;
-  position: relative;
-}
-
-.miniapp-icon {
-  background: #f8b422;
-}
-
-.miniapp-dot {
-  width: 14rpx;
-  height: 14rpx;
-  background: #ffffff;
-  border-radius: 50%;
-  position: absolute;
-  left: 13rpx;
-  top: 13rpx;
-}
-
-.mobile-icon {
-  background: #8bd51f;
-}
-
-.mobile-dot {
-  width: 8rpx;
-  height: 8rpx;
-  background: #ffffff;
-  border-radius: 4rpx;
-  position: absolute;
-  left: 16rpx;
-  bottom: 5rpx;
 }
 
 .setting-text {
   font-size: 34rpx;
   line-height: 48rpx;
-  font-weight: 300;
+  font-weight: 400;
   color: #111111;
 }
 
 .setting-arrow {
-  width: 28rpx;
-  height: 28rpx;
+  width: 24px;
+  height: 24px;
   opacity: 0.75;
 }
 

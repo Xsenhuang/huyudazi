@@ -183,11 +183,16 @@ Page({
 
     const rawScenes = getScenesByCategory(currentCategory.id);
     
-    // 旋转角度池：每6个一组循环，对应3行
+    // 旋转角度池：每8个一组循环，对应4行
     // 第一行: 左 -3°, 右 -3°
-    // 第二行: 左 3°, 右 -3°
-    // 第三行: 左 3°, 右 3°
-    const rotations = [-3, -3, 3, -3, 3, 3];
+    // 第二行: 左 -3°, 右 +3°
+    // 第三行: 左 +3°, 右 +3°
+    // 第四行: 左 +3°, 右 -3°
+    // 第五行(同第一行): 左 -3°, 右 -3°
+    // 第六行(同第二行): 左 -3°, 右 +3°
+    // 第七行(同第三行): 左 +3°, 右 +3°
+    // 第八行(同第四行): 左 +3°, 右 -3°
+    const rotations = [-3, -3, -3, 3, 3, 3, 3, -3, -3, -3, -3, 3, 3, 3, 3, -3];
 
     // 根据分类ID生成该分类专属的颜色排序
     const categoryColors = this.getShuffledArray(this.data.cardColors, currentCategory.id);

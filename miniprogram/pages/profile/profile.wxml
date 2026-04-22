@@ -17,7 +17,7 @@
 
       <view class="date-row">
         <view class="date-btn">
-          <image class="date-arrow date-arrow-left" src="../../assets/icons/arrow-right.svg" mode="aspectFit" />
+          <image class="date-arrow" src="../../assets/icons/arrow-left.svg" mode="aspectFit" />
         </view>
         <text class="date-text">2026-04-20</text>
         <view class="date-btn">
@@ -52,9 +52,7 @@
     <view class="settings-card">
       <view class="setting-item" bindtap="handleAddToMiniprogram">
         <view class="setting-left">
-          <view class="setting-icon miniapp-icon">
-            <view class="miniapp-dot"></view>
-          </view>
+          <image class="setting-icon" src="../../assets/icons/add-to.svg" mode="aspectFit" />
           <text class="setting-text">添加到我的小程序</text>
         </view>
         <image class="setting-arrow" src="../../assets/icons/arrow-right.svg" mode="aspectFit" />
@@ -62,10 +60,16 @@
       <view class="setting-divider"></view>
       <view class="setting-item" bindtap="handleAddToDesktop">
         <view class="setting-left">
-          <view class="setting-icon mobile-icon">
-            <view class="mobile-dot"></view>
-          </view>
+          <image class="setting-icon" src="../../assets/icons/phone.svg" mode="aspectFit" />
           <text class="setting-text">添加到手机桌面</text>
+        </view>
+        <image class="setting-arrow" src="../../assets/icons/arrow-right.svg" mode="aspectFit" />
+      </view>
+      <view class="setting-divider"></view>
+      <view class="setting-item" bindtap="handleContactDeveloper">
+        <view class="setting-left">
+          <image class="setting-icon" src="../../assets/icons/call.svg" mode="aspectFit" />
+          <text class="setting-text">联系开发者</text>
         </view>
         <image class="setting-arrow" src="../../assets/icons/arrow-right.svg" mode="aspectFit" />
       </view>

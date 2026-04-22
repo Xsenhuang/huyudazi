@@ -1,6 +1,5 @@
 <scroll-view class="page-scroll" scroll-y>
   <view class="page">
-    <!-- 自定义导航栏 -->
     <view class="custom-nav" style="{{customNavStyle}}">
       <image class="custom-nav-logo" style="{{customNavLogoStyle}}" src="{{images.CARD_ICON_DEFAULT}}" mode="aspectFill" />
     </view>
@@ -31,15 +30,12 @@
       >
         <swiper-item wx:for="{{cards}}" wx:key="id">
           <view class="card-wrap">
-            <view
-              class="knowledge-card {{currentCard === index ? 'is-active' : 'is-side'}}"
-              style="background: {{item.bg}};"
-            >
-              <view class="knowledge-card__top">
+            <view class="knowledge-card {{currentCard === index ? 'is-active' : 'is-side'}}">
+              <view class="knowledge-card__top" style="background: {{item.topBg}};">
                 <text class="knowledge-card__en">{{item.en}}</text>
                 <text class="knowledge-card__zh">{{item.zh}}</text>
               </view>
-              <view class="knowledge-card__bottom">
+              <view class="knowledge-card__bottom" style="background: {{item.bottomBg}};">
                 <text class="knowledge-card__desc">{{item.desc}}</text>
               </view>
             </view>

@@ -1,5 +1,6 @@
 import { audioService } from '../../utils/audioService';
 import { VoiceAPI } from '../../utils/voiceApi';
+import { MINIMAX_VOICE_ID } from '../../constants/voice';
 import { getProgress, SCENE_MASTERY } from '../../utils/store';
 import { REVIEW_SESSION } from '../../constants/index';
 import { buildReviewSession, forceTodayDecksDueNow, getReviewDashboard, ensureReviewDecksForScene, settleReviewSession } from '../../utils/reviewSrs';
@@ -200,7 +201,7 @@ Page({
     audioService.stop();
     VoiceAPI.textToSpeech({
       text: textToPlay,
-      voiceId: null,
+      voiceId: MINIMAX_VOICE_ID,
       onSuccess: (res) => {
         if (res && res.audioUrl) {
           audioService.play(res.audioUrl, () => {
