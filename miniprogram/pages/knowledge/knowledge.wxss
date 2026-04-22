@@ -1,0 +1,164 @@
+.page-scroll {
+  height: 100vh;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background: #F3F3F3;
+}
+
+/* 自定义导航栏：与 profile 页面保持一致 */
+.custom-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 88rpx;
+  padding-top: 20px;
+  z-index: 100;
+  pointer-events: none;
+  background: transparent;
+}
+
+.custom-nav-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 36px;
+  top: 24px;
+  border-radius: 10rpx;
+}
+
+.level-tabs {
+  width: 100%;
+  padding: calc(env(safe-area-inset-top) + 88rpx + 40px) 0 10rpx;
+  box-sizing: border-box;
+}
+
+.level-tabs__inner {
+  padding: 0 36rpx;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.level-tab {
+  height: 108rpx;
+  padding: 0 44rpx;
+  margin-right: 26rpx;
+  border-radius: 60rpx;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.92);
+  color: #1E1E1E;
+  box-shadow: 0 18rpx 48rpx rgba(0, 0, 0, 0.10);
+}
+
+.level-tab.is-active {
+  background: linear-gradient(90deg, #F05A24 0%, #FFB07A 100%);
+  color: #FFFFFF;
+  box-shadow: 0 22rpx 60rpx rgba(240, 90, 36, 0.35);
+}
+
+.level-tab__level {
+  font-size: 56rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+}
+
+.level-tab__count {
+  font-size: 28rpx;
+  font-weight: 500;
+  margin-left: 18rpx;
+  opacity: 0.95;
+}
+
+.cards {
+  flex: 1;
+  width: 100%;
+  padding-top: 30rpx;
+  box-sizing: border-box;
+}
+
+.cards__swiper {
+  width: 100%;
+  height: 760rpx;
+}
+
+.card-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.knowledge-card {
+  width: 560rpx;
+  height: 700rpx;
+  border-radius: 60rpx;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 34rpx 86rpx rgba(0, 0, 0, 0.18);
+  transform: scale(0.86);
+  transition: transform 220ms ease, opacity 220ms ease;
+  opacity: 0.85;
+}
+
+.knowledge-card.is-active {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.knowledge-card__top {
+  padding: 56rpx 50rpx 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.knowledge-card__en {
+  font-size: 46rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+  color: rgba(0, 0, 0, 0.82);
+  word-break: break-word;
+  line-height: 1.3;
+}
+
+.knowledge-card__zh {
+  margin-top: 18rpx;
+  font-size: 52rpx;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.82);
+  word-break: break-word;
+  line-height: 1.3;
+}
+
+.knowledge-card__bottom {
+  height: 160rpx;
+  padding: 0 50rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.50);
+}
+
+.knowledge-card__desc {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.78);
+}
+
+.bottom-space {
+  height: calc(env(safe-area-inset-bottom) + 180rpx);
+}

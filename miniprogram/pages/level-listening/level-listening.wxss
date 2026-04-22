@@ -1,0 +1,80 @@
+page {
+  background-color: #FDFBF7;
+  height: 100vh;
+}
+
+.container {
+  padding: 40rpx;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.progress {
+  text-align: right;
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 60rpx;
+}
+
+.audio-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100rpx;
+  margin-bottom: 120rpx;
+}
+
+.audio-btn {
+  width: 160rpx;
+  height: 160rpx;
+  background-color: var(--color-primary, #FF6B00);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 0, 0.2);
+}
+
+.icon-play {
+  width: 60rpx;
+  height: 60rpx;
+  filter: brightness(0) invert(1);
+}
+
+.audio-hint {
+  margin-top: 30rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.options-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+.option-item {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  text-align: center;
+  font-size: 32rpx;
+  color: #333;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+  transition: all 0.2s;
+}
+
+.option-item.correct {
+  background-color: #F6FFED;
+  color: #52C41A;
+  border: 2rpx solid #52C41A;
+}
+
+.option-item.wrong {
+  background-color: #FFF1F0;
+  color: #F5222D;
+  border: 2rpx solid #F5222D;
+}

@@ -1,0 +1,205 @@
+page {
+  background-color: #FDFBF7;
+  height: 100vh;
+}
+
+.container {
+  padding: 40rpx;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.progress {
+  text-align: right;
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 60rpx;
+}
+
+.content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.sentence-shanghai {
+  font-size: 48rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.sentence-pinyin {
+  font-size: 32rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+  font-family: "Helvetica Neue", sans-serif;
+  max-width: 100%;
+}
+
+.pinyin-syllable {
+  font-size: 32rpx;
+  color: #666;
+  line-height: 1.2;
+  display: inline;
+}
+
+.pinyin-raw {
+  font-size: 32rpx;
+  color: #666;
+  line-height: 1.2;
+  display: inline;
+}
+
+.pinyin-tone {
+  font-size: 20rpx;
+  vertical-align: super;
+  position: relative;
+  top: 6rpx;
+  margin-left: 2rpx;
+  color: #666;
+}
+
+.sentence-mandarin {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 40rpx;
+}
+
+.replay-icon-area {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10rpx;
+}
+
+.replay-icon-btn {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 36rpx;
+  background-color: rgba(255, 107, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-replay {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.keywords-hint {
+  font-size: 24rpx;
+  color: #666;
+  margin-top: 24rpx;
+}
+
+.keyword {
+  color: var(--color-primary, #FF6B00);
+  margin: 0 10rpx;
+  font-weight: bold;
+}
+
+.action-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 80rpx;
+}
+
+.action-btn {
+  width: 160rpx;
+  height: 160rpx;
+  background-color: #FF6B00;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 0, 0.3);
+  transition: all 0.2s;
+}
+
+.action-btn.recording {
+  transform: scale(1.1);
+  background-color: #FF8533;
+}
+
+.icon-mic {
+  width: 60rpx;
+  height: 60rpx;
+  filter: brightness(0) invert(1);
+}
+
+.action-hint {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.user-record-area {
+  margin-top: 60rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 90%;
+}
+
+.btn-secondary {
+  flex: 1;
+  background-color: #f5f5f5;
+  color: #333;
+  border-radius: 40rpx;
+  margin-right: 20rpx;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80rpx;
+}
+
+.btn-secondary::after {
+  border: none;
+}
+
+.btn-next-primary {
+  flex: 1;
+  background-color: var(--color-primary, #FF6B00);
+  color: #fff;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20rpx;
+  height: 80rpx;
+}
+
+.btn-next-primary::after {
+  border: none;
+}
+
+.finish-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.finish-msg {
+  font-size: 40rpx;
+  color: #333;
+  margin-bottom: 60rpx;
+  font-weight: bold;
+}
+
+.btn-primary {
+  width: 80%;
+  background-color: var(--color-primary, #FF6B00);
+  color: #fff;
+  border-radius: 40rpx;
+}

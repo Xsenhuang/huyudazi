@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/review/review",
+    "pages/knowledge/knowledge",
+    "pages/profile/profile",
+    "pages/scene-list/scene-list",
+    "pages/learning/learning",
+    "pages/level-listening/level-listening",
+    "pages/level-shadowing/level-shadowing",
+    "pages/level-practical/level-practical"
+  ],
+  "tabBar": {
+    "custom": true,
+    "color": "#000000",
+    "selectedColor": "#FFFFFF",
+    "backgroundColor": "#FFFFFF",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "探索"
+      },
+      {
+        "pagePath": "pages/review/review",
+        "text": "复习"
+      },
+      {
+        "pagePath": "pages/knowledge/knowledge",
+        "text": "知识点"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FDFBF7",
+    "navigationBarTitleText": "上海街区漫游",
+    "navigationBarTextStyle": "black"
+  },
+  "networkTimeout": {
+    "request": 30000,
+    "connectSocket": 30000,
+    "uploadFile": 30000,
+    "downloadFile": 30000
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

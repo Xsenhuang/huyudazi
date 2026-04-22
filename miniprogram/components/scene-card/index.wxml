@@ -1,0 +1,40 @@
+<view class="scene-card-wrapper {{isLeft ? 'align-left' : 'align-right'}}">
+  <view 
+    class="scene-card {{scene.status === 'LOCKED' ? 'status-locked' : ''}} {{scene.status === 'COMPLETED' ? 'status-completed' : ''}}"
+    bindtap="handleTapCard"
+  >
+    <!-- 左侧占位图标 -->
+    <view class="icon-container">
+      <!-- 若没有真实图标，暂时用色块替代，展示关卡号 -->
+      <view class="icon-placeholder">
+        <text>{{scene.id}}</text>
+      </view>
+    </view>
+    
+    <!-- 右侧内容区 -->
+    <view class="content-container">
+      <view class="header">
+        <text class="title">{{scene.title}}</text>
+        
+        <!-- 状态徽章 -->
+        <view class="badge badge-{{scene.status}}">
+          <text wx:if="{{scene.status === 'LOCKED'}}">未收集</text>
+          <text wx:elif="{{scene.status === 'PLAYING'}}">收集中</text>
+          <text wx:elif="{{scene.status === 'COMPLETED'}}">已收好</text>
+        </view>
+      </view>
+      
+      <view class="sub-title">{{scene.subTitle}}</view>
+    </view>
+    
+    <!-- 已完成的印章遮罩 -->
+    <view class="stamp-overlay" wx:if="{{scene.status === 'COMPLETED'}}">
+      <view class="stamp-circle">已收好</view>
+    </view>
+    
+    <!-- 未解锁的锁图标遮罩 -->
+    <view class="lock-overlay" wx:if="{{scene.status === 'LOCKED'}}">
+      <text class="lock-icon">🔒</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,17 @@
+<view class="container">
+  <view class="dialogue-area">
+    <dialogue-flow
+      id="dialogueFlow"
+      dialogueHistory="{{dialogueHistory}}"
+      currentOptions="{{currentOptions}}"
+      npcAvatar="{{scene.coverIcon}}"
+      sceneId="{{sceneId}}"
+      scrollIntoId="{{scrollIntoId}}"
+      bind:select="handleDialogueSelect"
+    ></dialogue-flow>
+    
+    <view class="footer-actions" wx:if="{{isDialogueFinished}}">
+      <button class="primary-btn" bindtap="finishDialogue">结算场景</button>
+    </view>
+  </view>
+</view>

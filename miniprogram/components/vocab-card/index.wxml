@@ -1,0 +1,17 @@
+<view class="vocab-card-container">
+  <view class="vocab-card-inner">
+    <view class="vocab-card-content">
+      <view class="word-text-small">{{vocab.word}}</view>
+      <view class="pinyin-text">{{vocab.pinyin}}</view>
+      <view class="mandarin-text">{{vocab.mandarin}}</view>
+      
+      <!-- 新增的使用场景展示 -->
+      <view class="note-text" wx:if="{{vocab.note}}">{{vocab.note}}</view>
+      
+      <view class="audio-btn {{isPlaying ? 'playing' : ''}}" catchtap="handlePlayAudio">
+        <image class="audio-icon" src="{{uiIcons.VOICE}}"></image>
+        <text>{{isPlaying ? '播放中...' : '点击发音'}}</text>
+      </view>
+    </view>
+  </view>
+</view>

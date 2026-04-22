@@ -1,0 +1,47 @@
+<view class="container">
+  <view class="progress">
+    进度: {{currentSIndex + 1}} / {{sentences.length}}
+  </view>
+
+  <view class="content-area" wx:if="{{!isFinished}}" bindtap="replayAudio">
+    <view class="sentence-shanghai">{{sentences[currentSIndex].text}}</view>
+    <view class="sentence-pinyin">
+      <block wx:for="{{currentPinyinTokens}}" wx:key="index">
+        <text wx:if="{{item.kind === 'syllable'}}" class="pinyin-syllable">{{item.base}}<text wx:if="{{item.tone}}" class="pinyin-tone">{{item.tone}}</text></text>
+        <text wx:else class="pinyin-raw">{{item.text}}</text>
+      </block>
+    </view>
+    <view class="sentence-mandarin">{{sentences[currentSIndex].mandarin}}</view>
+
+    <view class="replay-icon-area">
+      <view class="replay-icon-btn" bindtap="replayAudio">
+        <image src="{{uiIcons.REPLAY}}" mode="aspectFit" class="icon-replay"></image>
+      </view>
+    </view>
+
+    <view class="keywords-hint">
+      关键词: 
+      <text wx:for="{{sentences[currentSIndex].keywords}}" wx:key="*this" class="keyword">{{item}}</text>
+    </view>
+  </view>
+
+  <view class="action-area" wx:if="{{!isFinished}}">
+    <view class="action-btn {{isRecording ? 'recording' : ''}}" 
+          bindtouchstart="startRecord" 
+          bindtouchend="stopRecord">
+      <image src="{{uiIcons.MIC}}" mode="aspectFit" class="icon-mic"></image>
+    </view>
+    <view class="action-hint">{{isRecording ? '松开结束' : '按住跟读'}}</view>
+
+    <!-- 录音完成后显示的区域 -->
+    <view class="user-record-area" wx:if="{{hasRecorded && userRecordPath}}">
+      <button class="btn-secondary" bindtap="playUserRecord">听自己跟读</button>
+      <button class="btn-next-primary" bindtap="nextSentence">进入下一句</button>
+    </view>
+  </view>
+
+  <view class="finish-area" wx:if="{{isFinished}}">
+    <view class="finish-msg">跟读关卡完成！</view>
+    <button class="btn-primary" bindtap="goNextLevel">进入实战关</button>
+  </view>
+</view>

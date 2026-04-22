@@ -1,0 +1,229 @@
+page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFF; /* 纯白色背景 */
+}
+
+.page-scroll {
+  flex: 1;
+  height: 100%;
+}
+
+/* ================= Header ================= */
+.fixed-header-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding-bottom: 10rpx;
+}
+
+/* 自定义导航栏：与 review 页面保持一致 */
+.custom-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 88rpx;
+  padding-top: 20px;
+  z-index: 101;
+  pointer-events: none;
+  background: transparent;
+}
+
+.custom-nav-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 36px;
+  top: 24px;
+  border-radius: 10rpx;
+  z-index: 102;
+}
+
+.header-section {
+  padding: 0 40rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 20rpx;
+}
+
+.main-title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #E75D4C; /* Reddish orange from image */
+  margin-bottom: 12rpx;
+  letter-spacing: 2rpx;
+}
+
+.sub-title {
+  font-size: 28rpx;
+  color: #999999;
+}
+
+/* ================= Tabs ================= */
+.tabs-scroll {
+  width: 100%;
+  padding: 20rpx 0 10rpx 0;
+  box-sizing: border-box;
+}
+
+.tabs-container {
+  padding: 0 40rpx;
+  display: flex;
+  white-space: nowrap;
+}
+
+.tab-item {
+  display: inline-block;
+  padding: 12rpx 36rpx;
+  margin-right: 24rpx;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  background: #FFFFFF;
+  color: #333333;
+  border: 2rpx solid #E5E5E5;
+  transition: all 0.2s ease;
+}
+
+.tab-item.active {
+  background: #1A1A1A;
+  color: #FFFFFF;
+  border: 2rpx solid #1A1A1A;
+}
+
+/* ================= Grid ================= */
+.header-placeholder {
+  width: 100%;
+  /* 高度通过内联样式动态计算，这里不写死 */
+}
+
+.grid-container {
+  padding: 20rpx 30rpx calc(env(safe-area-inset-bottom) + 160rpx);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.grid-card {
+  width: calc(50% - 16rpx); /* 间距约为 16px (32rpx) */
+  border-radius: 72rpx; /* 圆角 36px 对应 72rpx */
+  padding: 50rpx 20rpx 40rpx;
+  margin-bottom: 32rpx; /* 行间距约为 16px (32rpx) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow: 0 10rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.card-icon-wrapper {
+  width: 140rpx;
+  height: 140rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.card-icon {
+  width: 90rpx;
+  height: 90rpx;
+}
+
+.card-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #1A1A1A;
+  margin-bottom: 16rpx;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-subtitle {
+  font-size: 26rpx;
+  color: #1A1A1A;
+  opacity: 0.8;
+  margin-bottom: 40rpx;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.card-btn {
+  position: relative;
+  background-color: #1A1A1A;
+  color: #FFFFFF;
+  border-radius: 40rpx;
+  padding: 12rpx 32rpx; /* 恢复紧凑的 padding，类似图2 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: 500;
+  display: inline-flex; /* 使用 inline-flex 让它根据内容自适应宽度 */
+}
+
+/* 小尾巴，使其看起来像气泡 */
+.card-btn::after {
+  content: '';
+  position: absolute;
+  right: 32rpx; /* 调整尾巴的位置向内收一点 */
+  bottom: -10rpx; /* 调整尾巴的高度，不要太长 */
+  width: 0;
+  height: 0;
+  border-left: 10rpx solid transparent;
+  border-right: 10rpx solid transparent;
+  border-top: 14rpx solid #1A1A1A;
+  transform: rotate(-25deg);
+}
+
+.hashtag-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 28rpx; /* 稍微调小一点 */
+  height: 28rpx;
+  border-radius: 50%;
+  border: 2rpx solid #FFFFFF;
+  font-size: 18rpx;
+  margin-right: 8rpx; /* 图标和文字靠得近一些 */
+}
+
+.empty-state {
+  width: 100%;
+  padding: 60rpx 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999999;
+}

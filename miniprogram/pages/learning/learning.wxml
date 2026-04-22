@@ -1,0 +1,43 @@
+<view class="container">
+  <view class="content">
+    <!-- 预习阶段：词汇学习 -->
+    <view class="vocab-area" wx:if="{{step === 'vocab'}}">
+      <view class="vocab-list">
+        <vocab-card 
+          wx:for="{{scene.vocabularies}}" 
+          wx:key="word" 
+          vocab="{{item}}"
+          sceneId="{{scene.id}}"
+        ></vocab-card>
+      </view>
+      <view class="btn-container">
+        <button class="primary-btn" bindtap="startReview">学习完成，进入词汇复习</button>
+      </view>
+    </view>
+
+    <!-- 复习阶段：听音选义 -->
+    <view class="review-area" wx:if="{{step === 'review'}}">
+      <view class="review-header">
+        <view class="review-title">听音选义</view>
+        <view class="review-progress">{{currentReviewIndex + 1}} / {{reviewQuestions.length}}</view>
+      </view>
+
+      <view class="review-audio-box" bindtap="playReviewAudio">
+        <image class="review-audio-icon {{isPlaying ? 'playing' : ''}}" src="{{uiIcons.VOICE}}"></image>
+        <view class="review-audio-text">点击播放发音</view>
+      </view>
+
+      <view class="review-options">
+        <view
+          class="review-option"
+          wx:for="{{reviewQuestions[currentReviewIndex].options}}"
+          wx:key="*this"
+          data-option="{{item}}"
+          bindtap="handleReviewSelect"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

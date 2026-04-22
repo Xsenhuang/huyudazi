@@ -1,0 +1,67 @@
+<!-- 首页纵向滑动视图 -->
+<scroll-view class="page-scroll" scroll-y>
+
+  <!-- 自定义导航栏 -->
+  <view class="custom-nav" style="{{customNavStyle}}">
+    <image class="custom-nav-logo" style="{{customNavLogoStyle}}" src="/assets/materials/logo-image.png" mode="aspectFit" />
+  </view>
+
+  <!-- 顶部固定区域：包含标题和Tab -->
+  <view class="fixed-header-wrapper">
+    <!-- 头部标题区 -->
+    <view class="header-section" style="padding-top: {{titleTop}}px;">
+      <view class="main-title">上海话搭子</view>
+      <view class="sub-title">随意选择一个场景开始探索~</view>
+    </view>
+
+    <!-- 横向滚动分类 Tab -->
+    <scroll-view class="tabs-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+      <view class="tabs-container">
+        <view 
+          class="tab-item {{currentTab === index ? 'active' : ''}}" 
+          wx:for="{{tabs}}" 
+          wx:key="id"
+          data-index="{{index}}"
+          bindtap="handleTabChange"
+        >
+          {{item.title}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 为固定头部占位，防止内容被遮挡 -->
+  <view class="header-placeholder" style="height: {{titleTop + 140}}px;"></view>
+
+  <!-- 瀑布流/网格 卡片区 -->
+  <view class="grid-container">
+    <block wx:for="{{sceneList}}" wx:key="id">
+      <view class="grid-card" style="background-color: {{item.bgColor}}; transform: rotate({{item.rotate}}deg);" bindtap="handleSceneTap" data-id="{{item.id}}">
+        <!-- 图标区域 -->
+        <view class="card-icon-wrapper">
+          <image class="card-icon" src="{{images.CARD_ICON_DEFAULT}}" mode="aspectFit"></image>
+        </view>
+        
+        <!-- 文本信息区 -->
+        <view class="card-info">
+          <view class="card-title">{{item.title}}</view>
+          <view class="card-subtitle">{{item.description}}</view>
+        </view>
+
+        <!-- 按钮区 -->
+        <view class="card-btn-wrapper">
+          <view class="card-btn">
+            <text class="hashtag-icon">#</text>
+            <text class="card-btn-text">{{item.mastery !== 'L0' ? '已学习' : '试试'}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 空状态提示（如果某个分类下还没有场景） -->
+    <view class="empty-state" wx:if="{{sceneList.length === 0}}">
+      <text class="empty-text">该分类下的场景正在加紧制作中...</text>
+    </view>
+  </view>
+
+</scroll-view>

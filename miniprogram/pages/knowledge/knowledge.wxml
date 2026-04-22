@@ -1,0 +1,53 @@
+<scroll-view class="page-scroll" scroll-y>
+  <view class="page">
+    <!-- 自定义导航栏 -->
+    <view class="custom-nav" style="{{customNavStyle}}">
+      <image class="custom-nav-logo" style="{{customNavLogoStyle}}" src="{{images.CARD_ICON_DEFAULT}}" mode="aspectFill" />
+    </view>
+
+    <scroll-view class="level-tabs" scroll-x enhanced show-scrollbar="{{false}}">
+      <view class="level-tabs__inner">
+        <view
+          wx:for="{{levels}}"
+          wx:key="key"
+          class="level-tab {{currentLevel === index ? 'is-active' : ''}}"
+          data-index="{{index}}"
+          bindtap="handleLevelTabTap"
+        >
+          <text class="level-tab__level">{{item.level}}</text>
+          <text class="level-tab__count">{{item.countText}}</text>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="cards">
+      <swiper
+        class="cards__swiper"
+        circular
+        current="{{currentCard}}"
+        previous-margin="120rpx"
+        next-margin="120rpx"
+        bindchange="handleCardChange"
+      >
+        <swiper-item wx:for="{{cards}}" wx:key="id">
+          <view class="card-wrap">
+            <view
+              class="knowledge-card {{currentCard === index ? 'is-active' : 'is-side'}}"
+              style="background: {{item.bg}};"
+            >
+              <view class="knowledge-card__top">
+                <text class="knowledge-card__en">{{item.en}}</text>
+                <text class="knowledge-card__zh">{{item.zh}}</text>
+              </view>
+              <view class="knowledge-card__bottom">
+                <text class="knowledge-card__desc">{{item.desc}}</text>
+              </view>
+            </view>
+          </view>
+        </swiper-item>
+      </swiper>
+    </view>
+
+    <view class="bottom-space"></view>
+  </view>
+</scroll-view>

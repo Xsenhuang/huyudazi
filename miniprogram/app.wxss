@@ -1,0 +1,36 @@
+page {
+  /* ================== 全局主题色与常量 ================== */
+  --color-bg: #FDFBF7; /* 淡奶油/燕麦色，温柔治愈 */
+  --color-text-primary: #333333; /* 主文本色 */
+  --color-text-secondary: #666666; /* 次级文本色 */
+  --color-text-light: #999999; /* 提示性文本色 */
+  --color-primary: #E8B05B; /* 暖色调的主题色，用于点亮、进行中状态 */
+  --color-completed: #C18C5D; /* 盖章色、已完成状态色 */
+  --color-card-bg: #FFFFFF;
+  --color-border: #EEEEEE;
+  
+  /* ================== 全局字体 ================== */
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-size: 32rpx;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", STHeiti, "Microsoft Yahei", Tahoma, Simsun, sans-serif;
+}
+
+.card {
+  background: var(--color-card-bg);
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.04);
+}
+
+.title {
+  font-weight: 600;
+  font-size: 36rpx;
+  margin-bottom: 12rpx;
+}
+
+.btn {
+  margin-top: 16rpx;
+}
+

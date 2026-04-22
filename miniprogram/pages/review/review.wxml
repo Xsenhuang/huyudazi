@@ -1,0 +1,145 @@
+<scroll-view class="page" scroll-y>
+  <!-- 自定义导航栏 -->
+  <view class="custom-nav" style="{{customNavStyle}}">
+    <image class="custom-nav-logo" style="{{customNavLogoStyle}}" src="/assets/materials/logo-image.png" mode="aspectFill" />
+  </view>
+
+  <!-- 仪表盘视图 -->
+  <view wx:if="{{view === 'dashboard'}}" class="dash" style="{{contentStyle}}">
+    <!-- 我的生词记录卡片 -->
+    <view class="vocab-card">
+      <text class="vocab-card-title">我的生词记录</text>
+      <view class="vocab-grid">
+        <view class="vocab-grid-row">
+          <view class="vocab-item vocab-item-vocab">
+            <text class="vocab-item-label">词汇</text>
+            <text class="vocab-item-value">{{dashboard.vocabCount || 0}}</text>
+          </view>
+          <view class="vocab-item vocab-item-listening">
+            <text class="vocab-item-label">听懂句子</text>
+            <text class="vocab-item-value">{{dashboard.listeningCount || 0}}</text>
+          </view>
+        </view>
+        <view class="vocab-grid-row">
+          <view class="vocab-item vocab-item-speaking">
+            <text class="vocab-item-label">跟读句子</text>
+            <text class="vocab-item-value">{{dashboard.speakingCount || 0}}</text>
+          </view>
+          <view class="vocab-item vocab-item-dialogue">
+            <text class="vocab-item-label">实战对话</text>
+            <text class="vocab-item-value">{{dashboard.dialogueCount || 0}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 徽章卡片 -->
+    <view class="badge-card">
+      <view class="badge-header">
+        <text class="badge-title">徽章</text>
+        <text class="badge-subtitle">通过一个场景和复习完一个场景后，自动点亮一枚徽章</text>
+      </view>
+      <text class="badge-soon">即将上线</text>
+    </view>
+  </view>
+
+  <!-- 复习会话视图 -->
+  <view wx:elif="{{view === 'session'}}" class="session" style="{{contentStyle}}">
+    <view class="session-top">
+      <view class="timer">
+        <text class="timer-num">{{timeLeftText}}</text>
+        <text class="timer-sub">剩余</text>
+      </view>
+      <view class="progress">
+        <text class="progress-k">进度</text>
+        <text class="progress-v">{{currentIndex + 1}} / {{session.cards.length}}</text>
+      </view>
+      <button class="ghost-btn" bindtap="exitSession">退出</button>
+    </view>
+
+    <view class="card" wx:if="{{session.cards[currentIndex]}}">
+      <view class="card-hd">
+        <text class="card-title">
+          {{session.cards[currentIndex].type === 'listening' ? '听一句，选意思' : '看意思，选沪语'}}
+        </text>
+        <text class="card-subtitle">{{session.cards[currentIndex].sceneTitle}}</text>
+      </view>
+
+      <view class="prompt">
+        <!-- 产出卡：看中文选沪语 -->
+        <view wx:if="{{session.cards[currentIndex].type === 'production'}}" class="prompt-zh">
+          <text class="prompt-zh-title">中文意图</text>
+          <text class="prompt-zh-main">{{session.cards[currentIndex].promptMandarin}}</text>
+          <view class="audio-row">
+            <button class="audio-btn {{isPlaying ? 'playing' : ''}}" bindtap="replayAudio" disabled="{{!hasAnswered}}">听示例</button>
+            <text class="audio-tip">作答后再听更有效</text>
+          </view>
+        </view>
+
+        <!-- 听懂卡：听音频选意思 -->
+        <view wx:if="{{session.cards[currentIndex].type === 'listening'}}" class="prompt-audio">
+          <text class="prompt-audio-title">听音频</text>
+          <view class="audio-box" bindtap="playCurrentAudio">
+            <image class="audio-icon {{isPlaying ? 'playing' : ''}}" src="/assets/icons/voice.svg" mode="aspectFit" />
+            <text class="audio-text">点击播放</text>
+          </view>
+          <view class="audio-row">
+            <button class="audio-btn" bindtap="replayAudio">再听一遍</button>
+            <text class="audio-tip">不纠结，凭直觉选</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="options">
+        <view
+          class="opt {{selectedOption === index ? (isCorrect ? 'opt-ok' : 'opt-bad') : ''}} {{hasAnswered && selectedOption !== index ? 'opt-disabled' : ''}}"
+          wx:for="{{session.cards[currentIndex].options}}"
+          wx:key="index"
+          data-index="{{index}}"
+          bindtap="handleSelectOption"
+        >
+          <text class="opt-text">{{item.text || item}}</text>
+          <text class="opt-pinyin" wx:if="{{item.pinyin}}">{{item.pinyin}}</text>
+        </view>
+      </view>
+
+      <!-- 答案反馈 -->
+      <view class="feedback" wx:if="{{hasAnswered}}">
+        <view class="feedback-content">
+          <text class="feedback-icon">{{isCorrect ? '✓' : '✗'}}</text>
+          <text class="feedback-text">{{isCorrect ? '回答正确！' : '回答错误'}}</text>
+        </view>
+        <button class="next-btn" bindtap="nextCard">{{isLastCard ? '查看结果' : '下一题'}}</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 结果视图 -->
+  <view wx:elif="{{view === 'result'}}" class="result" style="{{contentStyle}}">
+    <view class="result-card">
+      <view class="result-title">练习完成！</view>
+      <view class="result-stats">
+        <view class="result-item">
+          <text class="result-value">{{settlement.totalCorrect}}</text>
+          <text class="result-label">正确</text>
+        </view>
+        <view class="result-divider">/</view>
+        <view class="result-item">
+          <text class="result-value">{{settlement.total}}</text>
+          <text class="result-label">总题数</text>
+        </view>
+      </view>
+      <view class="result-rate">
+        <text class="rate-value">{{correctRate}}%</text>
+        <text class="rate-label">正确率</text>
+      </view>
+      <view class="result-reward" wx:if="{{settlement.expGained > 0}}">
+        <text class="reward-text">获得 {{settlement.expGained}} 经验值</text>
+      </view>
+      <view class="result-actions">
+        <button class="primary-btn" bindtap="backToDashboard">返回首页</button>
+        <button class="ghost-btn" wx:if="{{dashboard.dueCount > 0}}" bindtap="startReviewSession">再来一组</button>
+      </view>
+    </view>
+  </view>
+</scroll-view>

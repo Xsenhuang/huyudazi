@@ -1,0 +1,247 @@
+/* 页面整体：严格贴近设计稿底色与留白 */
+.page {
+  min-height: 100vh;
+  background: #f8f8f8;
+}
+
+.content {
+  padding: 156rpx 24rpx 0;
+  box-sizing: border-box;
+}
+
+/* 自定义导航栏：将 logo 放到导航栏标题位置 */
+.custom-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 88rpx;
+  padding-top: 20px;
+  z-index: 100;
+  pointer-events: none;
+  background: transparent;
+}
+
+.custom-nav-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 36px;
+  top: 24px;
+  border-radius: 10rpx;
+}
+
+/* 学习记录标题 */
+.page-title {
+  display: block;
+  margin: 8rpx 0 0 8rpx;
+  font-size: 40rpx;
+  line-height: 56rpx;
+  font-weight: 600;
+  color: #111111;
+}
+
+/* 学习记录主卡片 */
+.record-card {
+  margin-top: 24rpx;
+  padding: 30rpx 30rpx 30rpx;
+  background: #ffffff;
+  border-radius: 24rpx;
+}
+
+.switcher-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.switcher-bg {
+  width: 100%;
+  height: 84rpx;
+  padding: 6rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f3f3f3;
+  border-radius: 38rpx;
+  box-sizing: border-box;
+}
+
+.switcher-item {
+  width: 31%;
+  height: 72rpx;
+  border-radius: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  line-height: 40rpx;
+  font-weight: 500;
+  color: #111111;
+}
+
+.switcher-item.active {
+  background: #191919;
+  color: #ffffff;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.12);
+}
+
+/* 日期行 */
+.date-row {
+  margin-top: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.date-text {
+  font-size: 34rpx;
+  line-height: 48rpx;
+  font-weight: 600;
+  color: #111111;
+}
+
+.date-btn {
+  width: 58rpx;
+  height: 58rpx;
+  border-radius: 29rpx;
+  background: #f4f5f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.date-arrow {
+  width: 24rpx;
+  height: 24rpx;
+  opacity: 0.82;
+}
+
+.date-arrow-left {
+  transform: rotate(180deg);
+}
+
+/* 数据卡片网格 */
+.stats-grid {
+  margin-top: 34rpx;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28rpx 24rpx;
+}
+
+.stat-card {
+  min-height: 102rpx;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.stat-card-wide {
+  grid-column: 1 / 3;
+}
+
+.stat-label {
+  font-size: 28rpx;
+  line-height: 40rpx;
+  font-weight: 400;
+  color: #959ba3;
+}
+
+.stat-value {
+  margin-top: 6rpx;
+  margin-left: 0;
+  font-size: 40rpx;
+  line-height: 52rpx;
+  font-weight: 600;
+  color: #111111;
+}
+
+/* 其他设置卡片 */
+.settings-card {
+  margin-top: 30rpx;
+  background: #ffffff;
+  border-radius: 24rpx;
+  overflow: hidden;
+}
+
+.setting-item {
+  height: 116rpx;
+  padding: 0 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.setting-item:active {
+  background: #f7f7f7;
+}
+
+.setting-left {
+  display: flex;
+  align-items: center;
+}
+
+.setting-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+  border-radius: 10rpx;
+  position: relative;
+}
+
+.miniapp-icon {
+  background: #f8b422;
+}
+
+.miniapp-dot {
+  width: 14rpx;
+  height: 14rpx;
+  background: #ffffff;
+  border-radius: 50%;
+  position: absolute;
+  left: 13rpx;
+  top: 13rpx;
+}
+
+.mobile-icon {
+  background: #8bd51f;
+}
+
+.mobile-dot {
+  width: 8rpx;
+  height: 8rpx;
+  background: #ffffff;
+  border-radius: 4rpx;
+  position: absolute;
+  left: 16rpx;
+  bottom: 5rpx;
+}
+
+.setting-text {
+  font-size: 34rpx;
+  line-height: 48rpx;
+  font-weight: 300;
+  color: #111111;
+}
+
+.setting-arrow {
+  width: 28rpx;
+  height: 28rpx;
+  opacity: 0.75;
+}
+
+.setting-divider {
+  margin: 0 28rpx;
+  border-bottom: 1rpx solid #eceef1;
+}
+
+.bottom-spacer {
+  height: calc(env(safe-area-inset-bottom) + 210rpx);
+}

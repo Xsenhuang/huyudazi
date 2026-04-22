@@ -1,0 +1,72 @@
+<scroll-view 
+  class="dialogue-scroll" 
+  scroll-y 
+  scroll-into-view="{{scrollIntoId}}"
+  scroll-with-animation
+>
+  <view class="dialogue-container">
+    <!-- 对话历史记录 -->
+    <block wx:for="{{renderHistory}}" wx:key="id">
+      
+      <!-- NPC 气泡 (左侧) -->
+      <view class="chat-row npc-row" id="{{item.id}}" wx:if="{{item.speakerType === 'NPC'}}">
+        <image class="avatar" src="{{npcAvatar || '/assets/avatars/default.svg'}}"></image>
+        <view class="bubble-container">
+          <view class="bubble npc-bubble">
+            <text class="chat-text">{{item.text}}</text>
+            <view class="chat-pinyin" wx:if="{{item.pinyinTokens && item.pinyinTokens.length}}">
+              <block wx:for="{{item.pinyinTokens}}" wx:key="index">
+                <text wx:if="{{item.kind === 'syllable'}}" class="pinyin-syllable">{{item.base}}<text wx:if="{{item.tone}}" class="pinyin-tone">{{item.tone}}</text></text>
+                <text wx:else class="pinyin-raw">{{item.text}}</text>
+              </block>
+            </view>
+            <text class="chat-mandarin" wx:if="{{item.mandarin}}">{{item.mandarin}}</text>
+          </view>
+          <view class="voice-btn {{playingId === (item.audioItemId || item.id) ? 'playing' : ''}}" catchtap="playVoice" data-id="{{item.audioItemId || item.id}}" data-text="{{item.text}}" data-audio="{{item.audio}}" data-pinyin="{{item.pinyin}}" data-speakertype="{{item.speakerType}}">
+            <image class="voice-icon" src="{{uiIcons.VOICE}}"></image>
+          </view>
+        </view>
+      </view>
+
+      <!-- 用户 气泡 (右侧) -->
+      <view class="chat-row user-row" id="{{item.id}}" wx:if="{{item.speakerType === 'USER'}}">
+        <view class="bubble-container user-container">
+          <view class="bubble user-bubble">
+            <text class="chat-text">{{item.text}}</text>
+            <view class="chat-pinyin" wx:if="{{item.pinyinTokens && item.pinyinTokens.length}}">
+              <block wx:for="{{item.pinyinTokens}}" wx:key="index">
+                <text wx:if="{{item.kind === 'syllable'}}" class="pinyin-syllable">{{item.base}}<text wx:if="{{item.tone}}" class="pinyin-tone">{{item.tone}}</text></text>
+                <text wx:else class="pinyin-raw">{{item.text}}</text>
+              </block>
+            </view>
+            <text class="chat-mandarin" wx:if="{{item.mandarin}}">{{item.mandarin}}</text>
+          </view>
+          <view class="voice-btn {{playingId === (item.audioItemId || item.id) ? 'playing' : ''}}" catchtap="playVoice" data-id="{{item.audioItemId || item.id}}" data-text="{{item.text}}" data-audio="{{item.audio}}" data-pinyin="{{item.pinyin}}" data-speakertype="{{item.speakerType}}">
+            <image class="voice-icon" src="{{uiIcons.VOICE}}"></image>
+          </view>
+        </view>
+        <image class="avatar" src="/assets/avatars/user.svg"></image>
+      </view>
+    </block>
+
+    <!-- 当前需要用户选择的选项区域 -->
+    <view class="options-area" id="options-area" wx:if="{{currentOptions && currentOptions.length > 0}}">
+      <view class="options-hint">请选择你的回复：</view>
+      <view class="option-list">
+        <view 
+          class="option-item" 
+          wx:for="{{currentOptions}}" 
+          wx:key="text" 
+          bindtap="handleOptionSelect" 
+          data-option="{{item}}"
+        >
+          <text class="option-text">{{item.text}}</text>
+          <text class="option-mandarin">{{item.mandarin}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 占位，确保滚动到底部不被遮挡 -->
+    <view class="bottom-padding" id="bottom-padding"></view>
+  </view>
+</scroll-view>

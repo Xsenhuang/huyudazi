@@ -1,0 +1,22 @@
+<view class="container">
+  <view class="progress">
+    进度: {{currentQIndex + 1}} / {{questions.length}}
+  </view>
+
+  <view class="audio-area" bindtap="replayAudio">
+    <view class="audio-btn">
+      <image src="{{uiIcons.AUDIO}}" mode="aspectFit" class="icon-play"></image>
+    </view>
+    <view class="audio-hint">点击播放录音</view>
+  </view>
+
+  <view class="options-area">
+    <block wx:for="{{questions[currentQIndex].options}}" wx:key="index">
+      <view class="option-item {{selectedOption === index ? (isCorrect ? 'correct' : 'wrong') : ''}}"
+            bindtap="handleSelect" 
+            data-index="{{index}}">
+        {{item}}
+      </view>
+    </block>
+  </view>
+</view>

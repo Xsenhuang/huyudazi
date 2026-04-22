@@ -1,0 +1,75 @@
+.vocab-card-container {
+  width: 100%;
+  height: 360rpx;
+  box-sizing: border-box;
+}
+
+.vocab-card-inner {
+  width: 100%;
+  height: 100%;
+  background-color: #FFFFFF;
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.04);
+}
+
+.vocab-card-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx;
+  box-sizing: border-box;
+}
+
+.word-text-small {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.pinyin-text {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.mandarin-text {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 16rpx;
+}
+
+.note-text {
+  font-size: 22rpx;
+  color: #888;
+  background-color: #F0F2F5;
+  padding: 4rpx 16rpx;
+  border-radius: 12rpx;
+  margin-bottom: 24rpx;
+  text-align: center;
+}
+
+.audio-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  padding: 12rpx 28rpx;
+  background-color: #FFF2E0;
+  color: #E8B05B;
+  border-radius: 32rpx;
+  font-size: 26rpx;
+}
+
+.audio-btn.playing {
+  background-color: #E8B05B;
+  color: #FFF;
+}
+
+.audio-icon {
+  width: 28rpx;
+  height: 28rpx;
+}

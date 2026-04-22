@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "第4关：实战",
+  "usingComponents": {
+    "dialogue-flow": "/components/dialogue-flow/index"
+  }
+}

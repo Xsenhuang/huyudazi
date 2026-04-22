@@ -1,0 +1,161 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #F7F7F7;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #F7F7F7;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* --- 预习阶段 --- */
+.vocab-area {
+  padding: 40rpx 0; /* 取消左右 padding，让内部元素自己控制间距 */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.vocab-list {
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24rpx;
+  padding: 0 32rpx; /* 给列表加回 padding */
+  margin-bottom: 32rpx;
+  align-content: start;
+}
+
+.btn-container {
+  width: 100%;
+  padding-bottom: 20rpx;
+}
+
+.primary-btn {
+  width: calc(100% - 80rpx) !important; /* 距离左右各40rpx (即20px)，使用 !important 覆盖默认样式 */
+  margin: 0 auto; /* 居中 */
+  display: block; /* 强制块级显示以支持 margin: 0 auto */
+  background: var(--color-primary, #E8B05B);
+  color: #fff;
+  border-radius: 48rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  border: none;
+  padding: 24rpx 0;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+
+.primary-btn::after {
+  border: none;
+}
+
+/* --- 复习阶段 --- */
+.review-area {
+  padding: 60rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.review-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.review-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.review-progress {
+  font-size: 32rpx;
+  color: #999;
+  font-weight: bold;
+}
+
+.review-audio-box {
+  width: 240rpx;
+  height: 240rpx;
+  background-color: #FFF;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 32rpx rgba(232, 176, 91, 0.2);
+  border: 4rpx solid #E8B05B;
+  margin: auto 0;
+  flex-shrink: 0;
+}
+
+.review-audio-box:active {
+  opacity: 0.8;
+  transform: scale(0.95);
+}
+
+.review-audio-icon {
+  width: 80rpx;
+  height: 80rpx;
+  margin-bottom: 16rpx;
+}
+
+.review-audio-icon.playing {
+  animation: pulse 1s infinite;
+}
+
+.review-audio-text {
+  font-size: 28rpx;
+  color: #E8B05B;
+  font-weight: 500;
+}
+
+.review-options {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32rpx;
+  flex-shrink: 0;
+  margin-bottom: 40rpx;
+}
+
+.review-option {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #FFF;
+  padding: 32rpx 16rpx;
+  border-radius: 24rpx;
+  font-size: 32rpx;
+  color: #333;
+  text-align: center;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+  transition: all 0.2s;
+  border: 2rpx solid transparent;
+}
+
+.review-option:active {
+  background-color: #FDFBF7;
+  border-color: #E8B05B;
+  color: #E8B05B;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}

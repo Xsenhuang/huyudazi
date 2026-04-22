@@ -1,0 +1,36 @@
+<scroll-view class="page-scroll" scroll-y>
+  <!-- 头部大类信息 -->
+  <view class="header" wx:if="{{categoryInfo}}">
+    <image class="header-icon" src="{{categoryInfo.coverIcon}}" mode="aspectFit"></image>
+    <view class="header-content">
+      <view class="header-title">{{categoryInfo.title}}</view>
+      <view class="header-desc">{{categoryInfo.description}}</view>
+    </view>
+  </view>
+
+  <!-- 场景列表 -->
+  <view class="scene-list">
+    <block wx:if="{{sceneList.length > 0}}">
+      <block wx:for="{{sceneList}}" wx:key="id">
+        <view class="scene-card" bindtap="handleSceneTap" data-id="{{item.id}}">
+          <view class="scene-info">
+            <view class="scene-title">{{item.title}}</view>
+            <view class="scene-target">{{item.target}}</view>
+            <!-- 标签：掌握度 -->
+            <view class="mastery-tag {{item.mastery}}">
+              <text wx:if="{{item.mastery === 'L0'}}">未学习</text>
+              <text wx:if="{{item.mastery === 'L1'}}">L1: 听懂、跟得上</text>
+              <text wx:if="{{item.mastery === 'L2'}}">L2: 说得出、用得上</text>
+              <text wx:if="{{item.mastery === 'L3'}}">L3: 能应变、能实战</text>
+            </view>
+          </view>
+          <image class="scene-arrow" src="{{uiIcons.ARROW_RIGHT}}"></image>
+        </view>
+      </block>
+    </block>
+    
+    <view class="empty-state" wx:else>
+      <view class="empty-text">该分类下的场景正在加紧制作中...</view>
+    </view>
+  </view>
+</scroll-view>
