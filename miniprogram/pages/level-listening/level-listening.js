@@ -1,7 +1,6 @@
 import { getSceneById, saveLastVisitedLevel } from '../../utils/store';
 import { audioService } from '../../utils/audioService';
 import { VoiceAPI } from '../../utils/voiceApi';
-import { MINIMAX_VOICE_ID } from '../../constants/voice';
 import { UI } from '../../constants/assets/index.js';
 
 Page({
@@ -49,7 +48,7 @@ Page({
         // 传递 q.id 以便能够按 ID 精准匹配听力长句子
         const audioUrl = await VoiceAPI.textToSpeech(
           q.audioText,
-          MINIMAX_VOICE_ID.SHANGHAINESE_MALE,
+          null,
           q.audio,
           q.pinyin,
           q.id,

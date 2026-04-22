@@ -1,6 +1,5 @@
 import { audioService } from '../../utils/audioService';
 import { VoiceAPI } from '../../utils/voiceApi';
-import { MINIMAX_VOICE_ID } from '../../constants/voice';
 import { pickPinyinForToneDisplay, tokenizePinyinWithTone } from '../../utils/pinyinTone';
 import { UI } from '../../constants/assets/index.js';
 
@@ -31,7 +30,7 @@ Component({
     },
     userVoiceId: {
       type: String,
-      value: MINIMAX_VOICE_ID.SHANGHAINESE_MALE
+      value: null
     }
   },
 
@@ -105,12 +104,7 @@ Component({
       this.setData({ playingId: id });
 
       try {
-        let voiceId = this.properties.userVoiceId;
-        if (speakerType === 'NPC') {
-          voiceId = this.properties.npcAvatar && this.properties.npcAvatar.includes('female')
-            ? MINIMAX_VOICE_ID.SHANGHAINESE_FEMALE
-            : MINIMAX_VOICE_ID.SHANGHAINESE_MALE;
-        }
+        const voiceId = this.properties.userVoiceId;
 
         const audioUrl = await VoiceAPI.textToSpeech(text, voiceId, audio, pinyin, id, this.properties.sceneId);
 

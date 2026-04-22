@@ -1,16 +1,10 @@
 import { ENV } from '../constants/voice';
 import { ensureCloudInitialized } from './cloud';
-import md5 from './md5'; // 我们需要引入一个 md5 库
 
-// ⚠️ 请把你刚才复制的云存储 File ID 前缀填在这里：
-// 例如 'cloud://cloud1-1g0mgsc34984e5a0.636c-cloud1-1g0mgsc34984e5a0-1250000000/audio/'
+// 云存储音频文件基础路径
 const CLOUD_AUDIO_BASE_URL = 'cloud://cloud1-1g0mgsc34984e5a0.636c-cloud1-1g0mgsc34984e5a0-1419502875/audio/';
 
-const TTS_TIMEOUT_MS = 25000;
-const TTS_MAX_RETRY = 0;
-
 const ttsCache = new Map();
-const ttsInFlight = new Map();
 
 /**
  * 延时工具函数
@@ -44,23 +38,13 @@ function withTimeout(promise, timeoutMs) {
 }
 
 /**
- * 判断是否为超时类错误
- * @param {any} err
- * @returns {boolean}
- */
-function isTimeoutError(err) {
-  const msg = (err && (err.errMsg || err.message || err.toString())) || '';
-  return /timeout/i.test(msg);
-}
-
-/**
  * 语音接口层 (Data Management Abstraction)
  * @description 封装与云端/后端的通信，隔离业务逻辑，支持 Mock 模式
  */
 export const VoiceAPI = {
   /**
    * 极速播放：根据文本自动匹配云存储中的音频
-   * （已弃用：不再自动拼出 MD5 静态链接，改为直连匹配）
+   * （已弃用：不再自动拼出静态链接，改为直连匹配）
    */
   async getStaticAudioUrl(text, voiceId) {
     console.warn('getStaticAudioUrl 已弃用，现采用 directUrl 直连匹配音频');
@@ -151,7 +135,7 @@ export const VoiceAPI = {
 
     console.warn(`【音频未匹配】文本 "${text}" 没有配置音频，且云端也没有找到对应的ID或拼音文件。`);
     
-    // 如果没有配置音频，抛出一个特定的错误，让上层捕获，以便实现“没有匹配上就先不发出声音”的效果
+    // 如果没有配置音频，抛出一个特定的错误，让上层捕获，以便实现"没有匹配上就先不发出声音"的效果
     throw new Error('AUDIO_NOT_CONFIGURED');
   },
 
@@ -172,16 +156,7 @@ export const VoiceAPI = {
     ensureCloudInitialized();
 
     // 真实环境：上传音频文件到云存储，然后调用云函数进行识别
-    try {
-      // 1. 上传到云存储
-      // const uploadRes = await wx.cloud.uploadFile({ ... });
-      // 2. 调用云函数
-      // const { result } = await wx.cloud.callFunction({ ... });
-      // return result.text;
-      return "真实 ASR 暂未实现";
-    } catch (error) {
-      console.error('ASR 失败:', error);
-      throw error;
-    }
+    // 注意：ASR 功能暂未实现
+    return "ASR 功能暂未实现";
   }
 };

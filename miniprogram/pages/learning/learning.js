@@ -1,7 +1,6 @@
 import { audioService } from '../../utils/audioService';
 import { getSceneById, saveLastVisitedLevel } from '../../utils/store';
 import { VoiceAPI } from '../../utils/voiceApi';
-import { MINIMAX_VOICE_ID } from '../../constants/voice';
 import { UI } from '../../constants/assets/index.js';
 
 Page({
@@ -108,7 +107,7 @@ Page({
 
     try {
       const { scene } = this.data;
-      const audioUrl = await VoiceAPI.textToSpeech(q.word, MINIMAX_VOICE_ID.SHANGHAINESE_FEMALE, q.audio, q.pinyin, null, scene && scene.id);
+      const audioUrl = await VoiceAPI.textToSpeech(q.word, null, q.audio, q.pinyin, null, scene && scene.id);
       audioService.play(
         audioUrl,
         () => {},

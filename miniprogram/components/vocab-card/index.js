@@ -1,6 +1,5 @@
 import { audioService } from '../../utils/audioService';
 import { VoiceAPI } from '../../utils/voiceApi';
-import { MINIMAX_VOICE_ID } from '../../constants/voice';
 import { UI } from '../../constants/assets/index.js';
 
 Component({
@@ -15,7 +14,7 @@ Component({
     },
     voiceId: {
       type: String,
-      value: MINIMAX_VOICE_ID.SHANGHAINESE_FEMALE
+      value: null
     }
   },
 

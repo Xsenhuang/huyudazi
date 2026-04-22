@@ -11,7 +11,7 @@ export const ENV = {
 // 录音基础配置
 export const RECORD_CONFIG = {
   duration: 10000, // 测试阶段限制最长录音10秒
-  sampleRate: 16000, // 采样率（MiniMax 推荐 16000）
+  sampleRate: 16000, // 采样率
   numberOfChannels: 1, // 单声道
   encodeBitRate: 48000, // 编码码率
   format: 'mp3', // 音频格式
@@ -24,10 +24,4 @@ export const VOICE_STATUS = {
   RECOGNIZING: 'RECOGNIZING', // 识别/请求中
   PLAYING: 'PLAYING',     // 播放中
   ERROR: 'ERROR'          // 错误
-};
-
-// MiniMax 音色常量
-export const MINIMAX_VOICE_ID = {
-  SHANGHAINESE_FEMALE: 'presenter_female', 
-  SHANGHAINESE_MALE: 'presenter_male'
 };

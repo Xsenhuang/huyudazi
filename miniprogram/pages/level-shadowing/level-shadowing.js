@@ -2,7 +2,6 @@ import { getSceneById, saveLastVisitedLevel } from '../../utils/store';
 import { audioService } from '../../utils/audioService';
 import { recordService } from '../../utils/recordService';
 import { VoiceAPI } from '../../utils/voiceApi';
-import { MINIMAX_VOICE_ID } from '../../constants/voice';
 import { pickPinyinForToneDisplay, tokenizePinyinWithTone } from '../../utils/pinyinTone';
 import { UI } from '../../constants/assets/index.js';
 
@@ -80,7 +79,7 @@ Page({
         // 传递 s.id 以便能够按 ID 精准匹配跟读长句子
         const audioUrl = await VoiceAPI.textToSpeech(
           s.text,
-          MINIMAX_VOICE_ID.SHANGHAINESE_MALE,
+          null,
           s.audio,
           s.pinyin,
           s.id,
