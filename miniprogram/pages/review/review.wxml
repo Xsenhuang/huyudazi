@@ -1,4 +1,4 @@
-<scroll-view class="page" scroll-y>
+<view class="page">
   <!-- 自定义导航栏 -->
   <view class="custom-nav" style="{{customNavStyle}}">
     <image class="custom-nav-logo" style="{{customNavLogoStyle}}" src="/assets/materials/logo-image.png" mode="aspectFill" />
@@ -109,6 +109,41 @@
           <text class="feedback-icon">{{isCorrect ? '✓' : '✗'}}</text>
           <text class="feedback-text">{{isCorrect ? '回答正确！' : '回答错误'}}</text>
         </view>
+
+        <!-- 录音区域 -->
+        <view class="record-section">
+          <text class="record-title">跟读练习</text>
+          <view class="record-controls">
+            <!-- 默认状态：按住跟读按钮 -->
+            <view
+              wx:if="{{!hasRecorded}}"
+              class="record-btn-primary {{isRecording ? 'recording' : ''}}"
+              bindtap="{{isRecording ? 'stopRecord' : 'startRecord'}}"
+            >
+              <image class="record-icon-primary" src="/assets/icons/microphone.svg" mode="aspectFit" />
+              <text class="record-btn-text-primary">{{isRecording ? '松开结束' : '按住跟读'}}</text>
+            </view>
+
+            <!-- 录音后状态：播放跟读 + 重新跟读 -->
+            <block wx:if="{{hasRecorded}}">
+              <view
+                class="record-btn-secondary play-btn"
+                bindtap="playUserRecord"
+              >
+                <image class="record-icon-secondary" src="/assets/icons/play.svg" mode="aspectFit" />
+                <text class="record-btn-text-secondary">播放跟读</text>
+              </view>
+              <view
+                class="record-btn-secondary rerecord-btn"
+                bindtap="startRecord"
+              >
+                <image class="record-icon-secondary" src="/assets/icons/microphone.svg" mode="aspectFit" />
+                <text class="record-btn-text-secondary">重新跟读</text>
+              </view>
+            </block>
+          </view>
+        </view>
+
         <button class="next-btn" bindtap="nextCard">{{isLastCard ? '查看结果' : '下一题'}}</button>
       </view>
     </view>
@@ -142,4 +177,4 @@
       </view>
     </view>
   </view>
-</scroll-view>
+</view>

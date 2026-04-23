@@ -301,7 +301,7 @@
 
 /* ==================== 复习会话视图 ==================== */
 .session {
-  padding: 0 24rpx 40rpx;
+  padding: 0 16rpx 40rpx;
   box-sizing: border-box;
 }
 
@@ -551,6 +551,134 @@
 .feedback-text {
   font-size: 32rpx;
   font-weight: 600;
+}
+
+/* 录音区域 */
+.record-section {
+  margin-bottom: 32rpx;
+  padding: 24rpx;
+  background: #f8f8f8;
+  border-radius: 16rpx;
+}
+
+.record-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #666666;
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+
+.record-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 40rpx;
+  margin-bottom: 16rpx;
+  padding: 0 10rpx;
+}
+
+.record-btn-primary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 160rpx;
+  height: 160rpx;
+  background: #FF5722;
+  border-radius: 50%;
+  border: 4rpx solid #FF5722;
+  box-shadow: 0 8rpx 24rpx rgba(255, 87, 34, 0.3);
+}
+
+.record-btn-primary.recording {
+  background: #ffffff;
+  border-color: #FF5722;
+  animation: pulse-record 1.5s infinite;
+}
+
+@keyframes pulse-record {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 8rpx 24rpx rgba(255, 87, 34, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 12rpx 32rpx rgba(255, 87, 34, 0.5);
+  }
+}
+
+.record-icon-primary {
+  width: 56rpx;
+  height: 56rpx;
+  margin-bottom: 8rpx;
+  filter: brightness(0) invert(1);
+}
+
+.record-btn-primary.recording .record-icon-primary {
+  filter: none;
+}
+
+.record-btn-text-primary {
+  font-size: 24rpx;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.record-btn-primary.recording .record-btn-text-primary {
+  color: #FF5722;
+}
+
+/* 录音后状态的按钮 */
+.record-btn-secondary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 160rpx;
+  height: 160rpx;
+  background: #ffffff;
+  border-radius: 50%;
+  border: 2rpx solid #e0e0e0;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.record-btn-secondary.play-btn {
+  background: #FF5722;
+  border-color: #FF5722;
+  box-shadow: 0 8rpx 24rpx rgba(255, 87, 34, 0.3);
+}
+
+.record-btn-secondary.rerecord-btn {
+  background: #FFF5F2;
+  border-color: #FF5722;
+}
+
+.record-icon-secondary {
+  width: 48rpx;
+  height: 48rpx;
+  margin-bottom: 8rpx;
+}
+
+.record-btn-secondary.play-btn .record-icon-secondary {
+  filter: brightness(0) invert(1);
+}
+
+.record-btn-secondary.rerecord-btn .record-icon-secondary {
+  filter: invert(40%) sepia(80%) saturate(2000%) hue-rotate(350deg);
+}
+
+.record-btn-text-secondary {
+  font-size: 22rpx;
+  color: #666666;
+}
+
+.record-btn-secondary.play-btn .record-btn-text-secondary {
+  color: #ffffff;
+}
+
+.record-btn-secondary.rerecord-btn .record-btn-text-secondary {
+  color: #FF5722;
 }
 
 .next-btn {

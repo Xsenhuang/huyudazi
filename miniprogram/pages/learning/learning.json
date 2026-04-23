@@ -1,8 +1,6 @@
 {
   "navigationBarTitleText": "场景学习",
-  "navigationBarBackgroundColor": "#FDFBF7",
-  "backgroundColor": "#FDFBF7",
-  "usingComponents": {
-    "vocab-card": "../../components/vocab-card/index"
-  }
+  "navigationBarBackgroundColor": "#F8F8F8",
+  "backgroundColor": "#F8F8F8",
+  "usingComponents": {}
 }

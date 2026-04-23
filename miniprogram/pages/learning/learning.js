@@ -1,4 +1,5 @@
 import { audioService } from '../../utils/audioService';
+import { recordService } from '../../utils/recordService';
 import { getSceneById, saveLastVisitedLevel } from '../../utils/store';
 import { VoiceAPI } from '../../utils/voiceApi';
 import { UI } from '../../constants/assets/index.js';
@@ -8,9 +9,19 @@ Page({
     uiIcons: UI,
     scene: null,
     step: 'vocab',
+    currentVocabIndex: 0,
     reviewQuestions: [],
     currentReviewIndex: 0,
-    isPlaying: false
+    isPlaying: false,
+    isRecording: false,
+    hasRecorded: false,
+    userRecordPath: '',
+    // 滑动相关
+    cardOffsetX: 0,
+    cardRotate: 0,
+    touchStartX: 0,
+    touchStartY: 0,
+    isAnimating: false
   },
 
   onLoad(options) {
@@ -43,15 +54,223 @@ Page({
     if (hasVocab) {
       this.setData({
         step: 'vocab',
+        currentVocabIndex: 0
       });
     } else {
       this.startLearningLevels();
     }
   },
 
-  /**
-   * 开始复习阶段
-   */
+  // --- 滑动相关方法 ---
+  onTouchStart(e) {
+    if (this.data.isAnimating) return;
+    
+    const touch = e.touches[0];
+    this.setData({
+      touchStartX: touch.clientX,
+      touchStartY: touch.clientY
+    });
+  },
+
+  onTouchMove(e) {
+    if (this.data.isAnimating) return;
+    
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - this.data.touchStartX;
+    const deltaY = touch.clientY - this.data.touchStartY;
+    
+    // 只有当水平滑动大于垂直滑动时才处理
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      const rotate = deltaX * 0.05; // 旋转角度
+      this.setData({
+        cardOffsetX: deltaX,
+        cardRotate: rotate
+      });
+    }
+  },
+
+  onTouchEnd(e) {
+    if (this.data.isAnimating) return;
+    
+    const { cardOffsetX, currentVocabIndex, scene } = this.data;
+    const threshold = 100; // 滑动阈值
+    
+    if (cardOffsetX > threshold && currentVocabIndex > 0) {
+      // 向右滑动，回到上一个
+      this.setData({ isAnimating: true });
+      this.animateCard('right', () => {
+        this.setData({
+          currentVocabIndex: currentVocabIndex - 1,
+          cardOffsetX: 0,
+          cardRotate: 0,
+          isAnimating: false
+        });
+      });
+    } else if (cardOffsetX < -threshold && currentVocabIndex < scene.vocabularies.length - 1) {
+      // 向左滑动，进入下一个
+      this.setData({ isAnimating: true });
+      this.animateCard('left', () => {
+        this.setData({
+          currentVocabIndex: currentVocabIndex + 1,
+          cardOffsetX: 0,
+          cardRotate: 0,
+          isAnimating: false
+        });
+      });
+    } else {
+      // 回弹
+      this.setData({
+        cardOffsetX: 0,
+        cardRotate: 0
+      });
+    }
+  },
+
+  animateCard(direction, callback) {
+    const animation = wx.createAnimation({
+      duration: 300,
+      timingFunction: 'ease'
+    });
+    
+    if (direction === 'left') {
+      animation.translateX(-500).rotate(-30).opacity(0).step();
+    } else {
+      animation.translateX(500).rotate(30).opacity(0).step();
+    }
+    
+    this.setData({
+      cardAnimation: animation.export()
+    });
+    
+    setTimeout(callback, 300);
+  },
+
+  // --- 导航按钮 ---
+  goPrev() {
+    const { currentVocabIndex } = this.data;
+    if (currentVocabIndex > 0) {
+      this.setData({
+        currentVocabIndex: currentVocabIndex - 1,
+        cardOffsetX: 0,
+        cardRotate: 0,
+        // 重置录音状态
+        hasRecorded: false,
+        userRecordPath: ''
+      });
+    }
+  },
+
+  goNext() {
+    const { currentVocabIndex, scene } = this.data;
+
+    if (currentVocabIndex < scene.vocabularies.length - 1) {
+      // 不是最后一个，进入下一个
+      this.setData({
+        currentVocabIndex: currentVocabIndex + 1,
+        cardOffsetX: 0,
+        cardRotate: 0,
+        // 重置录音状态
+        hasRecorded: false,
+        userRecordPath: ''
+      });
+    } else {
+      // 是最后一个，进入复习
+      this.startReview();
+    }
+  },
+
+  // --- 音频播放 ---
+  async playCurrentAudio() {
+    const { scene, currentVocabIndex, isPlaying } = this.data;
+    const vocab = scene.vocabularies[currentVocabIndex];
+    
+    if (!vocab) return;
+    
+    if (isPlaying) {
+      audioService.stop();
+      this.setData({ isPlaying: false });
+      return;
+    }
+    
+    this.setData({ isPlaying: true });
+    
+    try {
+      const audioUrl = await VoiceAPI.textToSpeech(
+        vocab.word,
+        null,
+        vocab.audio,
+        vocab.pinyin,
+        null,
+        scene.id
+      );
+      
+      audioService.play(
+        audioUrl,
+        () => {},
+        (err) => {
+          this.setData({ isPlaying: false });
+          if (err) wx.showToast({ title: '播放失败', icon: 'none' });
+        }
+      );
+    } catch (error) {
+      this.setData({ isPlaying: false });
+      if (error.message === 'AUDIO_NOT_CONFIGURED') {
+        wx.showToast({ title: '该词汇暂无发音', icon: 'none' });
+      } else {
+        wx.showToast({ title: '语音获取失败', icon: 'none' });
+      }
+    }
+  },
+
+  // --- 录音跟读 ---
+  async startRecord() {
+    const hasAuth = await recordService.checkAuth();
+    if (!hasAuth) {
+      wx.showToast({ title: '需要麦克风权限', icon: 'none' });
+      return;
+    }
+
+    // 如果是重新录音，先清理之前的录音
+    if (this.data.hasRecorded) {
+      this.setData({ hasRecorded: false, userRecordPath: '' });
+    }
+
+    this.setData({ isRecording: true });
+    recordService.start();
+    wx.showToast({ title: '录音中...', icon: 'none', duration: 2000 });
+  },
+
+  stopRecord() {
+    if (!this.data.isRecording) return;
+
+    recordService.stop((res) => {
+      if (res && res.tempFilePath) {
+        this.setData({
+          isRecording: false,
+          hasRecorded: true,
+          userRecordPath: res.tempFilePath
+        });
+        wx.showToast({ title: '录音完成', icon: 'success' });
+      } else {
+        this.setData({ isRecording: false });
+        wx.showToast({ title: '录音失败', icon: 'none' });
+      }
+    });
+  },
+
+  // --- 播放用户录音 ---
+  playUserRecord() {
+    const { userRecordPath } = this.data;
+    if (userRecordPath) {
+      audioService.play(userRecordPath, () => {
+        // 播放结束
+      }, (err) => {
+        if (err) wx.showToast({ title: '播放失败', icon: 'none' });
+      });
+    }
+  },
+
+  // --- 复习阶段 ---
   startReview() {
     const { scene } = this.data;
     const vocabs = scene.vocabularies;
@@ -87,13 +306,13 @@ Page({
       reviewQuestions: questions,
       currentReviewIndex: 0
     }, () => {
+      wx.setNavigationBarTitle({
+        title: '复习词汇'
+      });
       this.playReviewAudio();
     });
   },
 
-  /**
-   * 播放复习题语音
-   */
   async playReviewAudio() {
     const { reviewQuestions, currentReviewIndex } = this.data;
     const q = reviewQuestions[currentReviewIndex];
@@ -126,9 +345,6 @@ Page({
     }
   },
 
-  /**
-   * 处理用户选项选择
-   */
   handleReviewSelect(e) {
     const { option } = e.currentTarget.dataset;
     const { reviewQuestions, currentReviewIndex } = this.data;

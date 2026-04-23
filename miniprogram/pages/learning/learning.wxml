@@ -1,42 +1,145 @@
 <view class="container">
-  <view class="content">
-    <!-- 预习阶段：词汇学习 -->
-    <view class="vocab-area" wx:if="{{step === 'vocab'}}">
-      <view class="vocab-list">
-        <vocab-card 
-          wx:for="{{scene.vocabularies}}" 
-          wx:key="word" 
-          vocab="{{item}}"
-          sceneId="{{scene.id}}"
-        ></vocab-card>
+  <!-- 预习阶段：词汇学习 -->
+  <view class="vocab-learning" wx:if="{{step === 'vocab'}}">
+    <!-- 进度条 -->
+    <view class="progress-bar">
+      <view class="progress-track">
+        <view class="progress-fill" style="width: {{((currentVocabIndex + 1) / scene.vocabularies.length) * 100}}%"></view>
       </view>
-      <view class="btn-container">
-        <button class="primary-btn" bindtap="startReview">学习完成，进入词汇复习</button>
+      <text class="progress-text">{{currentVocabIndex + 1}}/{{scene.vocabularies.length}}</text>
+    </view>
+
+    <!-- 标题 -->
+    <view class="learning-header">
+      <text class="learning-title">预习词汇</text>
+    </view>
+
+    <!-- 卡片区域 - 三层叠加 -->
+    <view class="cards-stack">
+      <!-- 左侧背景卡片（前一个） -->
+      <view 
+        class="card-side card-left" 
+        wx:if="{{currentVocabIndex > 0}}"
+      >
+        <text class="card-side-word">{{scene.vocabularies[currentVocabIndex - 1].word}}</text>
+      </view>
+
+      <!-- 右侧背景卡片（后一个） -->
+      <view 
+        class="card-side card-right" 
+        wx:if="{{currentVocabIndex < scene.vocabularies.length - 1}}"
+      >
+        <text class="card-side-word">{{scene.vocabularies[currentVocabIndex + 1].word}}</text>
+      </view>
+
+      <!-- 当前卡片 -->
+      <view 
+        class="card-main"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        style="transform: translateX({{cardOffsetX}}px) rotate({{cardRotate}}deg);"
+      >
+        <view class="card-main-inner">
+          <!-- 顶部词汇信息 -->
+          <view class="card-header">
+            <text class="card-word-main">{{scene.vocabularies[currentVocabIndex].word}}</text>
+            <text class="card-pinyin-main">/{{scene.vocabularies[currentVocabIndex].pinyin}}/</text>
+            <text class="card-mandarin-main">{{scene.vocabularies[currentVocabIndex].mandarin}}</text>
+            <view class="tag-container" wx:if="{{scene.vocabularies[currentVocabIndex].note}}">
+              <text class="tag-text">{{scene.vocabularies[currentVocabIndex].note}}</text>
+            </view>
+          </view>
+
+          <!-- 播放按钮 -->
+          <view class="audio-circle {{isPlaying ? 'playing' : ''}}" bindtap="playCurrentAudio">
+            <image class="audio-icon-large" src="{{isPlaying ? uiIcons.VOICE_ACTIVE : uiIcons.VOICE}}"></image>
+          </view>
+
+          <!-- 例句 -->
+          <view class="example-section" wx:if="{{scene.vocabularies[currentVocabIndex].example}}">
+            <text class="example-label">例句：</text>
+            <text class="example-text">{{scene.vocabularies[currentVocabIndex].example}}</text>
+          </view>
+
+          <!-- 录音跟读按钮组 -->
+          <view class="record-buttons">
+            <!-- 默认状态：按住跟读按钮 -->
+            <view
+              wx:if="{{!hasRecorded}}"
+              class="record-btn-primary {{isRecording ? 'recording' : ''}}"
+              bindtap="{{isRecording ? 'stopRecord' : 'startRecord'}}"
+            >
+              <image class="record-icon-primary" src="{{uiIcons.MIC}}"></image>
+              <text class="record-btn-text-primary">{{isRecording ? '松开结束' : '按住跟读'}}</text>
+            </view>
+
+            <!-- 录音后状态：播放跟读 + 重新跟读 -->
+            <block wx:if="{{hasRecorded}}">
+              <view
+                class="record-btn-secondary play-btn"
+                bindtap="playUserRecord"
+              >
+                <view class="record-btn-icon-wrap-secondary primary">
+                  <image class="record-btn-icon-secondary" src="{{uiIcons.AUDIO}}"></image>
+                </view>
+                <text class="record-btn-text-secondary">播放跟读</text>
+              </view>
+              <view
+                class="record-btn-secondary rerecord-btn"
+                bindtap="startRecord"
+              >
+                <view class="record-btn-icon-wrap-secondary secondary">
+                  <image class="record-btn-icon-secondary" src="{{uiIcons.MIC}}"></image>
+                </view>
+                <text class="record-btn-text-secondary">重新跟读</text>
+              </view>
+            </block>
+          </view>
+        </view>
       </view>
     </view>
 
-    <!-- 复习阶段：听音选义 -->
-    <view class="review-area" wx:if="{{step === 'review'}}">
-      <view class="review-header">
-        <view class="review-title">听音选义</view>
-        <view class="review-progress">{{currentReviewIndex + 1}} / {{reviewQuestions.length}}</view>
+    <!-- 底部导航按钮 -->
+    <view class="nav-buttons">
+      <view class="nav-btn {{currentVocabIndex === 0 ? 'disabled' : ''}}" bindtap="goPrev">
+        <image class="nav-icon" src="{{uiIcons.CHEVRON_LEFT}}"></image>
+        <text>上一个</text>
       </view>
-
-      <view class="review-audio-box" bindtap="playReviewAudio">
-        <image class="review-audio-icon {{isPlaying ? 'playing' : ''}}" src="{{uiIcons.VOICE}}"></image>
-        <view class="review-audio-text">点击播放发音</view>
+      <view 
+        class="nav-btn {{currentVocabIndex === scene.vocabularies.length - 1 ? 'primary' : ''}}" 
+        bindtap="goNext"
+      >
+        <text>{{currentVocabIndex === scene.vocabularies.length - 1 ? '进入词汇复习' : '下一个'}}</text>
+        <image class="nav-icon" src="{{currentVocabIndex === scene.vocabularies.length - 1 ? uiIcons.ARROW_RIGHT : uiIcons.CHEVRON_RIGHT}}"></image>
       </view>
+    </view>
 
-      <view class="review-options">
-        <view
-          class="review-option"
-          wx:for="{{reviewQuestions[currentReviewIndex].options}}"
-          wx:key="*this"
-          data-option="{{item}}"
-          bindtap="handleReviewSelect"
-        >
-          {{item}}
-        </view>
+    <!-- 滑动提示 -->
+    <text class="learning-tip">左滑进入下一词，右滑回到上一词</text>
+  </view>
+
+  <!-- 复习阶段：听音选义 -->
+  <view class="review-area" wx:if="{{step === 'review'}}">
+    <view class="review-header">
+      <view class="review-title">听音选义</view>
+      <view class="review-progress">{{currentReviewIndex + 1}} / {{reviewQuestions.length}}</view>
+    </view>
+
+    <view class="review-audio-box" bindtap="playReviewAudio">
+      <image class="review-audio-icon {{isPlaying ? 'playing' : ''}}" src="{{uiIcons.VOICE}}"></image>
+      <view class="review-audio-text">点击播放发音</view>
+    </view>
+
+    <view class="review-options">
+      <view
+        class="review-option"
+        wx:for="{{reviewQuestions[currentReviewIndex].options}}"
+        wx:key="*this"
+        data-option="{{item}}"
+        bindtap="handleReviewSelect"
+      >
+        {{item}}
       </view>
     </view>
   </view>

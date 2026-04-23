@@ -6,7 +6,7 @@ import { SCENE_COVER } from '../assets/index.js';
 export const CATEGORY_1_SCENES = [
   {
     id: 102,
-    title: '小区碰头',
+    title: '词汇学习',
     description: '早晨在小区碰到邻居怎么打招呼',
     target: '早晨问候 → 寒暄近况 → 聊聊家常 → 礼貌道别',
     coverIcon: SCENE_COVER.GREETING,

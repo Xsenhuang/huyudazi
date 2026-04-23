@@ -1,6 +1,6 @@
 .vocab-card-container {
   width: 100%;
-  height: 360rpx;
+  height: 480rpx;
   box-sizing: border-box;
 }
 

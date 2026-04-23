@@ -1,4 +1,5 @@
 import { audioService } from '../../utils/audioService';
+import { recordService } from '../../utils/recordService';
 import { VoiceAPI } from '../../utils/voiceApi';
 import { MINIMAX_VOICE_ID } from '../../constants/voice';
 import { getProgress, SCENE_MASTERY } from '../../utils/store';
@@ -48,7 +49,11 @@ Page({
     isPlaying: false,
     customNavStyle: '',
     customNavLogoStyle: '',
-    contentStyle: ''
+    contentStyle: '',
+    // 录音相关状态
+    isRecording: false,
+    hasRecorded: false,
+    userRecordPath: ''
   },
 
   timer: null,
@@ -72,6 +77,16 @@ Page({
   onUnload() {
     this.clearSessionTimer();
     audioService.stop();
+    this.cleanupRecording();
+  },
+
+  /**
+   * 清理录音资源
+   */
+  cleanupRecording() {
+    if (this.data.isRecording) {
+      recordService.stopSilently();
+    }
   },
 
   /**
@@ -274,7 +289,10 @@ Page({
         selectedOption: null,
         isCorrect: false,
         hasAnswered: false,
-        isLastCard: newIndex === session.cards.length - 1
+        isLastCard: newIndex === session.cards.length - 1,
+        // 重置录音状态
+        hasRecorded: false,
+        userRecordPath: ''
       });
       this.playCurrentAudio();
     }
@@ -327,5 +345,59 @@ Page({
    */
   backToDashboard() {
     this.setData({ view: 'dashboard' });
+  },
+
+  /**
+   * 开始录音
+   */
+  async startRecord() {
+    const hasAuth = await recordService.checkAuth();
+    if (!hasAuth) {
+      wx.showToast({ title: '需要麦克风权限', icon: 'none' });
+      return;
+    }
+
+    // 如果是重新录音，先清理之前的录音
+    if (this.data.hasRecorded) {
+      this.setData({ hasRecorded: false, userRecordPath: '' });
+    }
+
+    this.setData({ isRecording: true });
+    recordService.start();
+    wx.showToast({ title: '录音中...', icon: 'none', duration: 2000 });
+  },
+
+  /**
+   * 停止录音
+   */
+  stopRecord() {
+    if (!this.data.isRecording) return;
+    this.setData({ isRecording: false });
+
+    recordService.stop((res) => {
+      if (res && res.tempFilePath) {
+        this.setData({
+          hasRecorded: true,
+          userRecordPath: res.tempFilePath
+        });
+        wx.showToast({ title: '录音完成', icon: 'success' });
+      } else {
+        wx.showToast({ title: '录音失败', icon: 'none' });
+      }
+    });
+  },
+
+  /**
+   * 播放用户录音
+   */
+  playUserRecord() {
+    const { userRecordPath } = this.data;
+    if (userRecordPath) {
+      audioService.play(userRecordPath, () => {
+        // 播放结束
+      }, (err) => {
+        if (err) wx.showToast({ title: '播放失败', icon: 'none' });
+      });
+    }
   }
 });
