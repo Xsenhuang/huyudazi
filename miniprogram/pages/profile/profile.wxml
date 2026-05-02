@@ -16,35 +16,35 @@
       </view>
 
       <view class="date-row">
-        <view class="date-btn">
+        <button class="date-btn" hover-class="none" disabled="{{isPrevDisabled}}" bindtap="handlePrevPeriod">
           <image class="date-arrow" src="../../assets/icons/arrow-left.svg" mode="aspectFit" />
-        </view>
-        <text class="date-text">2026-04-20</text>
-        <view class="date-btn">
+        </button>
+        <text class="date-text">{{activeLabel}}</text>
+        <button class="date-btn" hover-class="none" disabled="{{isNextDisabled}}" bindtap="handleNextPeriod">
           <image class="date-arrow" src="../../assets/icons/arrow-right.svg" mode="aspectFit" />
-        </view>
+        </button>
       </view>
 
       <view class="stats-grid">
         <view class="stat-card">
           <text class="stat-label">已学词汇</text>
-          <text class="stat-value">{{summaries.length ? summaries[0].vocab : 9}}</text>
+          <text class="stat-value">{{activeSummary ? activeSummary.vocab : 9}}</text>
         </view>
         <view class="stat-card">
           <text class="stat-label">听懂句子</text>
-          <text class="stat-value">{{summaries.length ? summaries[0].listening : 5}}</text>
+          <text class="stat-value">{{activeSummary ? activeSummary.listening : 5}}</text>
         </view>
         <view class="stat-card">
           <text class="stat-label">跟读句子</text>
-          <text class="stat-value">{{summaries.length ? summaries[0].shadowing : 4}}</text>
+          <text class="stat-value">{{activeSummary ? activeSummary.shadowing : 4}}</text>
         </view>
         <view class="stat-card">
           <text class="stat-label">实战对话</text>
-          <text class="stat-value">{{summaries.length ? summaries[0].practical : 6}}</text>
+          <text class="stat-value">{{activeSummary ? activeSummary.practical : 6}}</text>
         </view>
         <view class="stat-card stat-card-wide">
           <text class="stat-label">已学场景</text>
-          <text class="stat-value">{{summaries.length ? summaries[0].scenes : 1}}</text>
+          <text class="stat-value">{{activeSummary ? activeSummary.scenes : 1}}</text>
         </view>
       </view>
     </view>

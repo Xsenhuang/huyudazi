@@ -34,16 +34,15 @@
 
 .level-tabs {
   width: 100%;
-  padding: calc(env(safe-area-inset-top) + 88rpx + 40rpx) 0 10rpx;
+  padding: calc(env(safe-area-inset-top) + 88rpx + 40rpx) 0 32rpx;
   box-sizing: border-box;
 }
 
 .level-tabs__inner {
-  padding: 0 40rpx;
-  display: flex;
+  padding: 24rpx 40rpx 32rpx;
+  display: inline-flex;
   align-items: center;
   white-space: nowrap;
-  box-sizing: border-box;
   gap: 20rpx;
 }
 

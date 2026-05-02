@@ -75,22 +75,31 @@ page {
 }
 
 .tabs-container {
-  padding: 0 40rpx;
-  display: flex;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  display: inline-flex;
   white-space: nowrap;
+  box-sizing: border-box;
 }
 
 .tab-item {
-  display: inline-block;
-  padding: 12rpx 36rpx;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 80rpx;
+  padding: 0 36rpx;
   margin-right: 24rpx;
-  border-radius: 40rpx;
+  border-radius: 9999rpx;
   font-size: 30rpx;
   font-weight: 500;
   background: #FFFFFF;
   color: #333333;
   border: 2rpx solid #E5E5E5;
   transition: all 0.2s ease;
+}
+
+.tab-item:last-child {
+  margin-right: 0;
 }
 
 .tab-item.active {
@@ -106,7 +115,7 @@ page {
 }
 
 .grid-container {
-  padding: 20rpx 30rpx calc(env(safe-area-inset-bottom) + 160rpx);
+  padding: 0 30rpx calc(env(safe-area-inset-bottom) + 160rpx);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
