@@ -56,22 +56,26 @@
             <image class="audio-icon-large" src="{{isPlaying ? uiIcons.VOICE_ACTIVE : uiIcons.VOICE}}"></image>
           </view>
 
-          <!-- 例句 -->
-          <view class="example-section" wx:if="{{scene.vocabularies[currentVocabIndex].example}}">
+          <view class="example-section" wx:if="{{currentExamples.length}}">
             <text class="example-label">例句：</text>
-            <text class="example-text">{{scene.vocabularies[currentVocabIndex].example}}</text>
+            <view class="example-list">
+              <view class="example-item" wx:for="{{currentExamples}}" wx:key="*this">
+                <text class="example-text">{{item}}</text>
+              </view>
+            </view>
           </view>
 
           <!-- 录音跟读按钮组 -->
           <view class="record-buttons">
             <!-- 默认状态：按住跟读按钮 -->
-            <view
-              wx:if="{{!hasRecorded}}"
-              class="record-btn-primary {{isRecording ? 'recording' : ''}}"
-              bindtap="{{isRecording ? 'stopRecord' : 'startRecord'}}"
-            >
-              <image class="record-icon-primary" src="{{uiIcons.MIC}}"></image>
-              <text class="record-btn-text-primary">{{isRecording ? '松开结束' : '按住跟读'}}</text>
+            <view wx:if="{{!hasRecorded}}" class="record-btn-primary-wrap">
+              <view
+                class="record-btn-primary {{isRecording ? 'recording' : ''}}"
+                bindtap="{{isRecording ? 'stopRecord' : 'startRecord'}}"
+              >
+                <image class="record-icon-primary" src="{{uiIcons.MIC}}"></image>
+              </view>
+              <text class="record-btn-primary-label">{{isRecording ? '松开结束' : '按住跟读'}}</text>
             </view>
 
             <!-- 录音后状态：播放跟读 + 重新跟读 -->
@@ -83,7 +87,7 @@
                 <view class="record-btn-icon-wrap-secondary primary">
                   <image class="record-btn-icon-secondary" src="{{uiIcons.AUDIO}}"></image>
                 </view>
-                <text class="record-btn-text-secondary">播放跟读</text>
+                <text class="record-btn-primary-label">播放跟读</text>
               </view>
               <view
                 class="record-btn-secondary rerecord-btn"
@@ -92,7 +96,7 @@
                 <view class="record-btn-icon-wrap-secondary secondary">
                   <image class="record-btn-icon-secondary" src="{{uiIcons.MIC}}"></image>
                 </view>
-                <text class="record-btn-text-secondary">重新跟读</text>
+                <text class="record-btn-primary-label">重新跟读</text>
               </view>
             </block>
           </view>

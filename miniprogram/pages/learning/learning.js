@@ -10,12 +10,14 @@ Page({
     scene: null,
     step: 'vocab',
     currentVocabIndex: 0,
+    currentExamples: [],
     reviewQuestions: [],
     currentReviewIndex: 0,
     isPlaying: false,
     isRecording: false,
     hasRecorded: false,
     userRecordPath: '',
+    vocabRecordMap: {},
     // 滑动相关
     cardOffsetX: 0,
     cardRotate: 0,
@@ -52,13 +54,82 @@ Page({
     const hasVocab = scene.vocabularies && scene.vocabularies.length > 0;
     
     if (hasVocab) {
-      this.setData({
-        step: 'vocab',
-        currentVocabIndex: 0
+      this.setData({ step: 'vocab' }, () => {
+        this.setCurrentVocabIndex(0);
       });
     } else {
       this.startLearningLevels();
     }
+  },
+
+  /**
+   * 根据词条对象提取例句列表（兼容 example 字符串 / examples 数组）
+   * @param {Record<string, any>} vocab
+   * @returns {string[]}
+   */
+  normalizeVocabExamples(vocab) {
+    if (!vocab) return [];
+    const list = Array.isArray(vocab.examples)
+      ? vocab.examples
+      : typeof vocab.example === 'string'
+        ? [vocab.example]
+        : [];
+    return list.map((s) => (typeof s === 'string' ? s.trim() : '')).filter(Boolean);
+  },
+
+  /**
+   * 获取词条录音存储 key（同一场景内唯一）
+   * @param {Record<string, any>} vocab
+   * @param {number} index
+   * @returns {string}
+   */
+  getVocabRecordKey(vocab, index) {
+    const { scene } = this.data;
+    const sceneId = scene && scene.id != null ? String(scene.id) : 'scene';
+    const vocabId = vocab && vocab.id != null ? String(vocab.id) : '';
+    const word = vocab && vocab.word ? String(vocab.word) : '';
+    return `${sceneId}_${vocabId || word || String(index)}`;
+  },
+
+  /**
+   * 获取指定词条的录音状态
+   * @param {number} index
+   * @returns {{hasRecorded: boolean, userRecordPath: string}}
+   */
+  getVocabRecordStateByIndex(index) {
+    const { scene, vocabRecordMap } = this.data;
+    const vocab = scene && scene.vocabularies ? scene.vocabularies[index] : null;
+    const key = this.getVocabRecordKey(vocab, index);
+    const record = (vocabRecordMap && vocabRecordMap[key]) || null;
+    return {
+      hasRecorded: Boolean(record && record.userRecordPath),
+      userRecordPath: record && record.userRecordPath ? record.userRecordPath : ''
+    };
+  },
+
+  /**
+   * 切换当前词条，并同步派生 UI 状态
+   * @param {number} nextIndex
+   */
+  setCurrentVocabIndex(nextIndex) {
+    const { scene, isPlaying, isRecording } = this.data;
+    const vocab = scene && scene.vocabularies ? scene.vocabularies[nextIndex] : null;
+    const currentExamples = this.normalizeVocabExamples(vocab);
+    const recordState = this.getVocabRecordStateByIndex(nextIndex);
+
+    if (isPlaying) audioService.stop();
+    if (isRecording) recordService.stopSilently();
+
+    this.setData({
+      currentVocabIndex: nextIndex,
+      currentExamples,
+      cardOffsetX: 0,
+      cardRotate: 0,
+      isPlaying: false,
+      isRecording: false,
+      hasRecorded: recordState.hasRecorded,
+      userRecordPath: recordState.userRecordPath
+    });
   },
 
   // --- 滑动相关方法 ---
@@ -99,23 +170,15 @@ Page({
       // 向右滑动，回到上一个
       this.setData({ isAnimating: true });
       this.animateCard('right', () => {
-        this.setData({
-          currentVocabIndex: currentVocabIndex - 1,
-          cardOffsetX: 0,
-          cardRotate: 0,
-          isAnimating: false
-        });
+        this.setCurrentVocabIndex(currentVocabIndex - 1);
+        this.setData({ isAnimating: false });
       });
     } else if (cardOffsetX < -threshold && currentVocabIndex < scene.vocabularies.length - 1) {
       // 向左滑动，进入下一个
       this.setData({ isAnimating: true });
       this.animateCard('left', () => {
-        this.setData({
-          currentVocabIndex: currentVocabIndex + 1,
-          cardOffsetX: 0,
-          cardRotate: 0,
-          isAnimating: false
-        });
+        this.setCurrentVocabIndex(currentVocabIndex + 1);
+        this.setData({ isAnimating: false });
       });
     } else {
       // 回弹
@@ -149,14 +212,7 @@ Page({
   goPrev() {
     const { currentVocabIndex } = this.data;
     if (currentVocabIndex > 0) {
-      this.setData({
-        currentVocabIndex: currentVocabIndex - 1,
-        cardOffsetX: 0,
-        cardRotate: 0,
-        // 重置录音状态
-        hasRecorded: false,
-        userRecordPath: ''
-      });
+      this.setCurrentVocabIndex(currentVocabIndex - 1);
     }
   },
 
@@ -165,14 +221,7 @@ Page({
 
     if (currentVocabIndex < scene.vocabularies.length - 1) {
       // 不是最后一个，进入下一个
-      this.setData({
-        currentVocabIndex: currentVocabIndex + 1,
-        cardOffsetX: 0,
-        cardRotate: 0,
-        // 重置录音状态
-        hasRecorded: false,
-        userRecordPath: ''
-      });
+      this.setCurrentVocabIndex(currentVocabIndex + 1);
     } else {
       // 是最后一个，进入复习
       this.startReview();
@@ -245,14 +294,26 @@ Page({
 
     recordService.stop((res) => {
       if (res && res.tempFilePath) {
+        const { scene, currentVocabIndex, vocabRecordMap } = this.data;
+        const vocab = scene && scene.vocabularies ? scene.vocabularies[currentVocabIndex] : null;
+        const key = this.getVocabRecordKey(vocab, currentVocabIndex);
+        const nextMap = { ...(vocabRecordMap || {}) };
+        nextMap[key] = { userRecordPath: res.tempFilePath };
+
         this.setData({
           isRecording: false,
           hasRecorded: true,
-          userRecordPath: res.tempFilePath
+          userRecordPath: res.tempFilePath,
+          vocabRecordMap: nextMap
         });
         wx.showToast({ title: '录音完成', icon: 'success' });
       } else {
-        this.setData({ isRecording: false });
+        const recordState = this.getVocabRecordStateByIndex(this.data.currentVocabIndex);
+        this.setData({
+          isRecording: false,
+          hasRecorded: recordState.hasRecorded,
+          userRecordPath: recordState.userRecordPath
+        });
         wx.showToast({ title: '录音失败', icon: 'none' });
       }
     });

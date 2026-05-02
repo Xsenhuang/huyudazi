@@ -12,15 +12,15 @@ export const CATEGORY_1_SCENES = [
     coverIcon: SCENE_COVER.GREETING,
     
     vocabularies: [
-      { word: '侬早', pinyin: 'nong zao', mandarin: '您早', note: '早晨问候语' },
-      { word: '长远勿见', pinyin: 'dzan yeu veq ci', mandarin: '好久不见', note: '久别重逢用语'},
-      { word: '蛮好', pinyin: 'me hao', mandarin: '挺好', note: '表示程度"挺"' },
-      { word: '介', pinyin: 'ga', mandarin: '这么', note: '程度副词', audio: ''},
-      { word: '老', pinyin: 'lao', mandarin: '很', note: '程度副词' },
-      { word: '最近', pinyin: 'zoe jhin', mandarin: '最近', note: '时间词' },
-      { word: '买小菜', pinyin: 'ma xiao ce', mandarin: '买菜', note: '日常活动' },
-      { word: '小囡', pinyin: 'xiao noe', mandarin: '小孩', note: '家庭成员' },
-      { word: '先走一步', pinyin: 'xi zoe yik bu', mandarin: '先走一步', note: '道别用语' }
+      { word: '侬早', pinyin: 'nong zao', mandarin: '您早', note: '早晨问候语', examples: ['侬早啊！'] },
+      { word: '长远勿见', pinyin: 'dzan yeu veq ci', mandarin: '好久不见', note: '久别重逢用语', examples: ['长远勿见，侬最近老忙额嘛！'] },
+      { word: '蛮好', pinyin: 'me hao', mandarin: '挺好', note: '表示程度"挺"', examples: ['蛮好蛮好，最近公司里向事体多。'] },
+      { word: '介', pinyin: 'ga', mandarin: '这么', note: '程度副词', audio: '', examples: ['小囡介大了呀。'] },
+      { word: '老', pinyin: 'lao', mandarin: '很', note: '程度副词', examples: ['侬最近老忙额嘛！'] },
+      { word: '最近', pinyin: 'zoe jhin', mandarin: '最近', note: '时间词', examples: ['侬最近忙伐？'] },
+      { word: '买小菜', pinyin: 'ma xiao ce', mandarin: '买菜', note: '日常活动', examples: ['侬早啊！买小菜去啊？'] },
+      { word: '小囡', pinyin: 'xiao noe', mandarin: '小孩', note: '家庭成员', examples: ['小囡介大了呀，上幼儿园了伐？'] },
+      { word: '先走一步', pinyin: 'xi zoe yik bu', mandarin: '先走一步', note: '道别用语', examples: ['王阿姨，我先走一步，明朝会。'] }
     ],
 
     // 万能句/核心句：完全原创的生活化对话

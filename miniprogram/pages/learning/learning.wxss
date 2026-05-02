@@ -22,7 +22,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24rpx;
+  margin-bottom: 12rpx;
 }
 
 .progress-track {
@@ -53,7 +53,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 32rpx;
+  margin-bottom: 24px;
 }
 
 .learning-title {
@@ -66,20 +66,22 @@
 
 /* 卡片堆叠容器 */
 .cards-stack {
-  flex: 1;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 500px;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 16rpx;
-  height: 780rpx;
+  margin-bottom: 24px;
+  height: 500px;
 }
 
 /* 侧边背景卡片 */
 .card-side {
   position: absolute;
   width: 600rpx;
-  height: 780rpx;
+  height: 500px;
   background-color: #FFFFFF;
   border-radius: 48rpx;
   box-shadow: 0 4rpx 24rpx rgba(0, 0, 0, 0.06);
@@ -110,7 +112,7 @@
 .card-main {
   position: relative;
   width: 600rpx;
-  height: 780rpx;
+  height: 500px;
   background-color: #FFFFFF;
   border-radius: 48rpx;
   box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
@@ -124,7 +126,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40rpx 48rpx 32rpx;
+  justify-content: center;
+  padding: 48rpx;
   box-sizing: border-box;
 }
 
@@ -208,8 +211,22 @@
   flex-direction: column;
   align-items: center;
   gap: 12rpx;
-  margin-bottom: 24rpx;
+  margin-bottom: 48px;
   padding: 0 20rpx;
+}
+
+.example-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.example-item {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .example-label {
@@ -231,7 +248,21 @@
   display: flex;
   justify-content: center;
   gap: 48rpx;
-  margin-top: auto;
+  margin-top: 0;
+}
+
+.record-btn-primary-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.record-btn-primary-label {
+  margin-top: 12px;
+  font-size: 24rpx;
+  color: #1B1B1B;
+  font-weight: 500;
+  font-family: PingFang SC;
 }
 
 /* 默认状态：按住跟读大按钮 */
@@ -243,9 +274,9 @@
   width: 160rpx;
   height: 160rpx;
   background: #F15D22;
-  border-radius: 32rpx;
+  border-radius: 24px;
   border: 4rpx solid #F15D22;
-  box-shadow: 0 8rpx 24rpx rgba(241, 93, 34, 0.3);
+  box-shadow: 0 4px 0 0 #954221;
 }
 
 .record-btn-primary.recording {
@@ -257,18 +288,18 @@
 @keyframes pulse-record {
   0%, 100% {
     transform: scale(1);
-    box-shadow: 0 8rpx 24rpx rgba(241, 93, 34, 0.3);
+    box-shadow: 0 4px 0 0 #954221;
   }
   50% {
     transform: scale(1.05);
-    box-shadow: 0 12rpx 32rpx rgba(241, 93, 34, 0.5);
+    box-shadow: 0 4px 0 0 #954221;
   }
 }
 
 .record-icon-primary {
-  width: 56rpx;
-  height: 56rpx;
-  margin-bottom: 8rpx;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 0;
   filter: brightness(0) invert(1);
 }
 
@@ -276,29 +307,18 @@
   filter: none;
 }
 
-.record-btn-text-primary {
-  font-size: 24rpx;
-  color: #ffffff;
-  font-weight: 500;
-  font-family: PingFang SC;
-}
-
-.record-btn-primary.recording .record-btn-text-primary {
-  color: #F15D22;
-}
-
 /* 录音后状态：播放跟读 + 重新跟读 */
 .record-btn-secondary {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12rpx;
+  gap: 0;
 }
 
 .record-btn-icon-wrap-secondary {
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 32rpx;
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -315,8 +335,8 @@
 }
 
 .record-btn-icon-secondary {
-  width: 48rpx;
-  height: 48rpx;
+  width: 36px;
+  height: 36px;
 }
 
 .record-btn-icon-wrap-secondary.primary .record-btn-icon-secondary {
@@ -325,20 +345,6 @@
 
 .record-btn-icon-wrap-secondary.secondary .record-btn-icon-secondary {
   filter: invert(40%) sepia(80%) saturate(2000%) hue-rotate(350deg);
-}
-
-.record-btn-text-secondary {
-  font-size: 26rpx;
-  color: #666;
-  font-family: PingFang SC;
-}
-
-.record-btn-secondary.play-btn .record-btn-text-secondary {
-  color: #F15D22;
-}
-
-.record-btn-secondary.rerecord-btn .record-btn-text-secondary {
-  color: #F15D22;
 }
 
 /* 底部导航按钮 */
@@ -371,8 +377,8 @@
 }
 
 .nav-icon {
-  width: 36rpx;
-  height: 36rpx;
+  width: 24px;
+  height: 24px;
 }
 
 /* 滑动提示 */
